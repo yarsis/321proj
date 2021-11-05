@@ -50,7 +50,7 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         }
         gameTerrain.add(new Terrain(50, 550, 50, 50));
         gameTerrain.add(new Terrain(600, 550, 50, 50));
-        gameTerrain.add(new Terrain(20, 550, 50, 50));
+        gameTerrain.add(new Terrain(200, 550, 50, 50));
     }
     
     @Override
