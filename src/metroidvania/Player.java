@@ -10,25 +10,18 @@ import java.awt.Rectangle;
 
 /**
  *
- * @author caden
+ * @author caden, Henry Schulz
  */
 public class Player {
-    
     PlayPanel game;
-    
     int x, y;
     int width, height;
     double xspeed, yspeed;
-    
     Rectangle hitBox;
-    
     boolean keyLeft, keyRight, keyDown, keyUp;
     
     public Player(int x, int y, PlayPanel game){
-        
-        this.game = game;
-        //saving panel object passed into player object
-        
+        this.game = game;   //saving panel object passed into player object
         this.x = x;
         this.y = y;
         width = 50;
@@ -38,10 +31,8 @@ public class Player {
     }
     
     public void set(){
-         
         x += xspeed;
         y += yspeed;
-        
         hitBox.x = x;
         hitBox.y = y;
         //updating hitbox as samus moves
@@ -50,7 +41,7 @@ public class Player {
             xspeed *= 0.7;
         }
         else if(keyLeft && !keyRight){
-            xspeed -= 1;                        //movement handlers
+            xspeed -= 1;    //movement handlers
             System.out.println("na");
         }
         else if(keyRight && !keyLeft){
@@ -58,26 +49,22 @@ public class Player {
             System.out.println("ja");
         }
         
-        if(xspeed > 0 && xspeed < 0.7) xspeed = 0;
-        if(xspeed < 0 && xspeed > -0.7) xspeed = 0;
         //stop movement if going very slow (prevent gliding)
+        if(0 < xspeed && xspeed < 0.7) xspeed = 0;
+        if(-0.7 < xspeed && xspeed < 0) xspeed = 0;
         
-        if(xspeed > 7) xspeed = 7;
-        if(xspeed < -7) xspeed = -7;
         //prevent moving too fast
+        if(7 < xspeed) xspeed = 7;
+        if(xspeed < -7) xspeed = -7;
         
         if(keyUp){
-            
             hitBox.y += 1;
             for(int i = 0; i < game.gameTerrain.size(); i++){
                 Terrain ter = game.gameTerrain.get(i);
-                if(ter.hitBox.intersects(hitBox)) yspeed = -6;
+                if(ter.hitBox.intersects(hitBox)) yspeed = -8;
                 //check if terrain is under player, if so allow them to jump
             }
-            hitBox.y -= 1;
-            //move up if SPACE is pressed (negative due to 2D game axis)
         }
-        
         
         yspeed += 0.3;
         
@@ -89,9 +76,7 @@ public class Player {
         move in the direction of the wall. When we break out of the loop, the 
         hitbox will be updated right before collision, speed will be set to 0, 
         and the position of the player will be updated to reflect the hitbox.
-
-        *this same procedure applies to vertical collision*
-
+        *this same procedure applies to vertical collision
         */
         hitBox.x += xspeed;
         for(int i = 0; i < game.gameTerrain.size(); i++){
@@ -124,7 +109,41 @@ public class Player {
                     yspeed = 0;
                     y = hitBox.y;
                 }
+        }
+        
+        // Player reached end of terrain
+        if(hitBox.x <= 10 && hitBox.y == 500) {
+            move(600, 500);
+            game.makeTerrain();
+        }
+        
+        // Horizontal limiter
+        if(hitBox.x <= 0 || 630 <= hitBox.x) {
+            xspeed = 0;
+        }
+        
+        // Ceiling limiter
+        if(hitBox.y <= 0) {
+            yspeed = 0;
+        }
+        
+        // Player fell off screen and died
+        if(700 <= hitBox.y) {
+            move(600, 500);
+        }
     }
+    
+    public void move(int x, int y){
+        /**
+        * Function will teleport the player to the specified location.
+        * @param x          Integer of new x position.
+        * @param y          Integer of new y position.
+        * @precondition     Game exists.
+        * @postcondition    Player has been moved.
+        */
+        
+        this.x = x;
+        this.y = y;
     }
     
     public void drawPlayer(Graphics2D gtd){
