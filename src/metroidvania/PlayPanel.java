@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -24,8 +25,10 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
     Timer newTimer;
     ArrayList<Terrain> gameTerrain = new ArrayList<>();
     ArrayList<Enemy> enemyList = new ArrayList<>();
+    ArrayList<Projectile> projList = new ArrayList<>();
     int currentTerrain;
     boolean firstLevel = true;
+    int cooldown = 0;
     
     public PlayPanel(){
         samus = new Player(600, 500, this); //create new player object
@@ -38,6 +41,11 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
             public void run() {
                 samus.set();
                 repaint();
+                for(int i = 0; i < projList.size(); i++){
+                    Projectile proj = projList.get(i);
+                    proj.set();
+                }
+               cooldown += 1;
             }
         }, 0, 16);
     }
@@ -269,6 +277,11 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
             oneEnemy.draw(gtd);
         }
         
+        for(int i = 0; i < projList.size(); i++){
+            Projectile proj = projList.get(i);
+            proj.drawProj(gtd);
+        }
+        
         temp = 27;
         gtd.setColor(Color.PINK);
         g.setFont(new Font("Arial", Font.BOLD, 30));
@@ -319,26 +332,43 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
             Enemy oneEnemy = enemyList.get(i);
             
             if("up".equals(oneEnemy.direction) || "down".equals(oneEnemy.direction)){
-                if((oneEnemy.x - samus.width + 20) <= samus.x && samus.x <= (oneEnemy.x + oneEnemy.width - 20)){
+                if((oneEnemy.x - samus.width + 20) <= samus.x && samus.x <= (oneEnemy.x + oneEnemy.width - 20) && cooldown > 100){
                     if(samus.y > oneEnemy.y){
                         oneEnemy.shoot(gtd, "down");
+                        Projectile m = new Projectile(oneEnemy.x + 22, oneEnemy.y - 22, 0, 4);
+                        projList.add(m);
+                        m.set();
+                        cooldown = 0;
                     }
                     else {
                         oneEnemy.shoot(gtd, "up");
+                        Projectile m = new Projectile(oneEnemy.x + 22, oneEnemy.y - 22, 0, -4);
+                        projList.add(m);
+                        m.set();
+                        cooldown = 0;
                     }
                 }
             }
             
             if("left".equals(oneEnemy.direction) || "right".equals(oneEnemy.direction)){
-                if((oneEnemy.y - samus.height + 20) <= samus.y && samus.y <= (oneEnemy.y + oneEnemy.height - 20)){
+                if((oneEnemy.y - samus.height + 20) <= samus.y && samus.y <= (oneEnemy.y + oneEnemy.height - 20) && cooldown > 100){
                     if(samus.x > oneEnemy.x){
                         oneEnemy.shoot(gtd, "right");
+                        Projectile m = new Projectile(oneEnemy.x, oneEnemy.y, 4, 0);
+                        projList.add(m);
+                        m.set();
+                        cooldown = 0;
                     }
                     else {
                         oneEnemy.shoot(gtd, "left");
+                        Projectile m = new Projectile(oneEnemy.x, oneEnemy.y, -4, 0);
+                        projList.add(m);
+                        m.set();
+                        cooldown = 0;
                     }
                 }
             }
+            
         }
     }
 
