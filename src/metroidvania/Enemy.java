@@ -19,6 +19,7 @@ public class Enemy {
     String direction;
     Polygon shape;
     PlayPanel game;
+    int cooldown;
     
     public Enemy(int x, int y, int width, int height, String direction) {
         /**
@@ -37,6 +38,7 @@ public class Enemy {
         this.height = height;
         this.width = width;
         this.direction = direction;
+        cooldown = 0;
         
         switch(direction){
             case "up" -> {
@@ -66,42 +68,8 @@ public class Enemy {
         }
     }
     
-    public void shoot(Graphics2D gtd, String direction){
-        /**
-        * Function will create a projectile that starts at the tip of the 
-        * triangle.
-        * @param gtd        Display area for the game.
-        * @param direction  String referencing up, down, left or right.
-        * @precondition     Display area and enemy have been initialized.
-        * @postcondition    A projectile has been made from enemy towards the 
-        * player.
-        */
-        int coordinateX = 0;
-        int coordinateY = 0;
-        boolean hitWall;
-        
-        switch(direction){
-            case "up" -> {
-                coordinateX = x + width/2 - 10;
-                coordinateY = y - 10;
-            }
-            case "down" -> {
-                coordinateX = x + width/2 - 10;
-                coordinateY = y + width - 10;
-            }
-            case "right" -> {
-                coordinateX = x + width - 10;
-                coordinateY = y + width/2 - 10;
-            }
-            case "left" -> {
-                coordinateX = x - 10;
-                coordinateY = y + width/2 - 10;
-            }
-        }
-        
-        gtd.setColor(Color.RED);
-        gtd.fillOval(coordinateX, coordinateY, 20, 20);
-    }
+  
+    
     
     public void draw(Graphics2D gtd) {
         /**
@@ -116,4 +84,17 @@ public class Enemy {
         gtd.setColor(Color.BLACK);
         gtd.drawPolygon(shape);
     }
+    
+    public void increaseCooldown(){
+        cooldown += 1;
+    }
+    
+    public void resetCooldown(){
+        cooldown = 0;
+    }
+    
+    public int getCooldown(){
+        return cooldown;
+    }
+   
 }

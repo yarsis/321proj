@@ -8,13 +8,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -28,9 +29,11 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
     ArrayList<Projectile> projList = new ArrayList<>();
     int currentTerrain;
     boolean firstLevel = true;
-    int cooldown = 0;
+    MenuPanel menu = new MenuPanel();
+    String state = "menu";
     
     public PlayPanel(){
+    
         samus = new Player(600, 500, this); //create new player object
         
         makeTerrain();
@@ -44,8 +47,14 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
                 for(int i = 0; i < projList.size(); i++){
                     Projectile proj = projList.get(i);
                     proj.set();
+                    if(proj.xspeed == 0 && proj.yspeed == 0){
+                        projList.remove(i);
+                    }
                 }
-               cooldown += 1;
+               for(int i = 0; i < enemyList.size(); i++){
+                    Enemy oneEnemy = enemyList.get(i);
+                    oneEnemy.increaseCooldown();
+                }
             }
         }, 0, 16);
     }
@@ -58,6 +67,7 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         */
         gameTerrain.clear();
         enemyList.clear();
+        projList.clear();
         
         switch (randomInteger(0, 3, currentTerrain)) {
             case 101 -> {
@@ -265,6 +275,10 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         super.paint(g); //prevent flickering
         int temp;
         Graphics2D gtd = (Graphics2D) g;
+        if(state == "menu"){
+            menu.paint(g);
+        }
+        else{
         samus.drawPlayer(gtd);
         
         for(int i = 0; i < gameTerrain.size(); i++){
@@ -289,6 +303,7 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         gtd.drawString(String.valueOf(samus.health), temp + 110, 35);
         
         playerPositions(gtd);
+        }
     }
     
     @Override
@@ -332,39 +347,35 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
             Enemy oneEnemy = enemyList.get(i);
             
             if("up".equals(oneEnemy.direction) || "down".equals(oneEnemy.direction)){
-                if((oneEnemy.x - samus.width + 20) <= samus.x && samus.x <= (oneEnemy.x + oneEnemy.width - 20) && cooldown > 100){
+                if((oneEnemy.x - samus.width + 20) <= samus.x && samus.x <= (oneEnemy.x + oneEnemy.width - 20) && oneEnemy.getCooldown() > 100){
                     if(samus.y > oneEnemy.y){
-                        oneEnemy.shoot(gtd, "down");
-                        Projectile m = new Projectile(oneEnemy.x + 22, oneEnemy.y - 22, 0, 4);
+                        Projectile m = new Projectile(oneEnemy.x + 22, oneEnemy.y + 50, 0, 4, this);
                         projList.add(m);
                         m.set();
-                        cooldown = 0;
+                        oneEnemy.resetCooldown();
                     }
                     else {
-                        oneEnemy.shoot(gtd, "up");
-                        Projectile m = new Projectile(oneEnemy.x + 22, oneEnemy.y - 22, 0, -4);
+                        Projectile m = new Projectile(oneEnemy.x + 22, oneEnemy.y - 50, 0, -4, this);
                         projList.add(m);
                         m.set();
-                        cooldown = 0;
+                        oneEnemy.resetCooldown();
                     }
                 }
             }
             
             if("left".equals(oneEnemy.direction) || "right".equals(oneEnemy.direction)){
-                if((oneEnemy.y - samus.height + 20) <= samus.y && samus.y <= (oneEnemy.y + oneEnemy.height - 20) && cooldown > 100){
+                if((oneEnemy.y - samus.height + 20) <= samus.y && samus.y <= (oneEnemy.y + oneEnemy.height - 20) && oneEnemy.getCooldown() > 100){
                     if(samus.x > oneEnemy.x){
-                        oneEnemy.shoot(gtd, "right");
-                        Projectile m = new Projectile(oneEnemy.x, oneEnemy.y, 4, 0);
+                        Projectile m = new Projectile(oneEnemy.x + 50, oneEnemy.y + 22 , 4, 0, this);
                         projList.add(m);
                         m.set();
-                        cooldown = 0;
+                        oneEnemy.resetCooldown();
                     }
                     else {
-                        oneEnemy.shoot(gtd, "left");
-                        Projectile m = new Projectile(oneEnemy.x, oneEnemy.y, -4, 0);
+                        Projectile m = new Projectile(oneEnemy.x - 12, oneEnemy.y + 22, -4, 0, this);
                         projList.add(m);
                         m.set();
-                        cooldown = 0;
+                        oneEnemy.resetCooldown();
                     }
                 }
             }
@@ -391,5 +402,11 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         if(e.getKeyCode() == KeyEvent.VK_RIGHT) samus.keyRight = false;
         if(e.getKeyChar() == 'a') samus.keyLeft = false;
         if(e.getKeyChar() == 'd') samus.keyRight = false;
+    }
+
+    void mouseClicked(MouseEvent e) {
+        if(menu.playRect.contains(new Point(e.getPoint().x, e.getPoint().y - 27))){
+            state = "game";
+        }
     }
 }
