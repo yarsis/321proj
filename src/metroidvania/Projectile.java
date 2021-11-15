@@ -16,10 +16,12 @@ public class Projectile {
     int x,y;
     int width, height;
     double xspeed, yspeed;
-    Rectangle HitBox;
+    Rectangle hitBox;
+    PlayPanel game;
     
-    public Projectile(int x, int y, int xspeed, int yspeed){
+    public Projectile(int x, int y, int xspeed, int yspeed, PlayPanel game){
         
+        this.game = game;
         this.x = x;
         this.y = y;
         this.xspeed = xspeed;
@@ -27,15 +29,48 @@ public class Projectile {
         height = 5;
         width = 5;
         
-        HitBox = new Rectangle(x, y, width, height);
+        hitBox = new Rectangle(x, y, width, height);
     }
     
     public void set(){
         
         x += xspeed;
         y += yspeed;
-        HitBox.x = x;
-        HitBox.y = y;
+        hitBox.x = x;
+        hitBox.y = y;
+        
+        hitBox.x += xspeed;
+        for(int i = 0; i < game.gameTerrain.size(); i++){
+                Terrain ter = game.gameTerrain.get(i);
+                if(hitBox.intersects(ter.hitBox)){
+                    hitBox.x -= xspeed;
+                    
+                    while(!ter.hitBox.intersects(hitBox)){
+                        hitBox.x += Math.signum(xspeed);
+                    }
+                    
+                    hitBox.x -= Math.signum(xspeed);
+                    xspeed = 0;
+                    x = hitBox.x;
+                }
+        }
+        
+        //vertical collision detection
+        hitBox.y += yspeed;
+        for(int i = 0; i < game.gameTerrain.size(); i++){
+                Terrain ter = game.gameTerrain.get(i);
+                if(hitBox.intersects(ter.hitBox)){
+                    hitBox.y -= yspeed;
+                    
+                    while(!ter.hitBox.intersects(hitBox)){
+                        hitBox.y += Math.signum(yspeed);
+                    }
+                    
+                    hitBox.y -= Math.signum(yspeed);
+                    yspeed = 0;
+                    y = hitBox.y;
+                }
+        }
     }
     
     public void drawProj(Graphics2D gtd){
