@@ -110,6 +110,17 @@ public class Player {
                     y = hitBox.y;
                 }
         }
+        
+        // collision with projectiles
+        
+        for(int i = 0; i < game.projList.size(); i++){
+            Projectile proj = game.projList.get(i);
+            if(hitBox.intersects(proj.hitBox)){
+                game.projList.remove(i);
+                health -= 20;
+            }
+            
+        }
     }
     
     public void move(int x, int y){
