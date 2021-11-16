@@ -20,20 +20,18 @@ public class Projectile {
     PlayPanel game;
     
     public Projectile(int x, int y, int xspeed, int yspeed, PlayPanel game){
-        
         this.game = game;
         this.x = x;
         this.y = y;
         this.xspeed = xspeed;
         this.yspeed = yspeed;
-        height = 5;
-        width = 5;
+        height = 10;
+        width = 10;
         
         hitBox = new Rectangle(x, y, width, height);
     }
     
     public void set(){
-        
         x += xspeed;
         y += yspeed;
         hitBox.x = x;
@@ -82,6 +80,5 @@ public class Projectile {
         */
         gtd.setColor(Color.RED);
         gtd.fillRect(x, y, width, height);
-    
-}
+    }
 }
