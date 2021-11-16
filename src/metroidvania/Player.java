@@ -33,11 +33,18 @@ public class Player {
     }
     
     public void set(){
+        /**
+        * Function will modify the player according to pressed keys and 
+        * interaction with the game.
+        * @precondition     Player and game area exists.
+        * @postcondition    Player has been modified accordingly.
+        */
+        
+        //updating hitbox as samus moves
         x += xspeed;
         y += yspeed;
         hitBox.x = x;
         hitBox.y = y;
-        //updating hitbox as samus moves
         
         if((keyLeft && keyRight) || (!keyLeft && !keyRight)){
             xspeed *= 0.7;
@@ -112,14 +119,75 @@ public class Player {
         }
         
         // collision with projectiles
-        
         for(int i = 0; i < game.projList.size(); i++){
             Projectile proj = game.projList.get(i);
             if(hitBox.intersects(proj.hitBox)){
                 game.projList.remove(i);
                 health -= 20;
             }
+        }
+        
+        // Player reached end of terrain, generate new area.
+        if(hitBox.x <= 10 && hitBox.y == 500) {
+            move(600, 500);
+            game.makeTerrain();
+        }
+        
+        // Horizontal movement limiter.
+        if(hitBox.x <= 0 || 630 <= hitBox.x) {
+            xspeed = 0;
+        }
+        
+        // Ceiling movement limiter.
+        if(hitBox.y <= 0) {
+            yspeed = 0;
+        }
+        
+        // Player fell off screen, damage player and move to area start.
+        if(700 <= hitBox.y) {
+            health = health/2;
+            move(600, 500);
+        }
+        
+        // Player is in enemy's shooting line
+        for(int i = 0; i < game.enemyList.size(); i++){
+            Enemy oneEnemy = game.enemyList.get(i);
             
+            if(!oneEnemy.destroyed) {
+                if("up".equals(oneEnemy.direction) || "down".equals(oneEnemy.direction)){
+                    if((oneEnemy.x - width + 20) <= x && x <= (oneEnemy.x + oneEnemy.width - 20) && oneEnemy.getCooldown() > 100){
+                        if(y > oneEnemy.y){
+                            Projectile shot = new Projectile(oneEnemy.x + 20, oneEnemy.y + 50, 0, 4, game);
+                            game.projList.add(shot);
+                            shot.set();
+                            oneEnemy.resetCooldown();
+                        }
+                        else {
+                            Projectile shot = new Projectile(oneEnemy.x + 20, oneEnemy.y - 50, 0, -4, game);
+                            game.projList.add(shot);
+                            shot.set();
+                            oneEnemy.resetCooldown();
+                        }
+                    }
+                }
+
+                if("left".equals(oneEnemy.direction) || "right".equals(oneEnemy.direction)){
+                    if((oneEnemy.y - height + 20) <= y && y <= (oneEnemy.y + oneEnemy.height - 20) && oneEnemy.getCooldown() > 100){
+                        if(x > oneEnemy.x){
+                            Projectile shot = new Projectile(oneEnemy.x + 50, oneEnemy.y + 20 , 4, 0, game);
+                            game.projList.add(shot);
+                            shot.set();
+                            oneEnemy.resetCooldown();
+                        }
+                        else {
+                            Projectile shot = new Projectile(oneEnemy.x - 12, oneEnemy.y + 20, -4, 0, game);
+                            game.projList.add(shot);
+                            shot.set();
+                            oneEnemy.resetCooldown();
+                        }
+                    }
+                }
+            }
         }
     }
     
