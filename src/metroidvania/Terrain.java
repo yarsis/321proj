@@ -13,14 +13,11 @@ import java.awt.Rectangle;
  * @author caden
  */
 public class Terrain {
-    
     int x, y;
     int width, height;
-    
     Rectangle hitBox;
     
     public Terrain(int x, int y, int width, int height){
-        
         this.x = x;
         this.y = y;
         this.height = height;
@@ -35,6 +32,5 @@ public class Terrain {
         gtd.setColor(Color.WHITE);
         gtd.fillRect(x+1, y+1, width-1, height-1);
         //add or sub to values to create border when filling
-    }
-        
+    } 
 }
