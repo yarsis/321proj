@@ -16,12 +16,13 @@ import java.awt.Polygon;
 public class Enemy {
     int x, y;
     int width, height;
+    int cooldown;
+    boolean destroyed;
     String direction;
     Polygon shape;
     PlayPanel game;
-    int cooldown;
     
-    public Enemy(int x, int y, int width, int height, String direction) {
+    public Enemy(int x, int y, int width, int height, String direction, PlayPanel game) {
         /**
         * Function will use Polygon to create a triangle of size width and 
         * height, with starting point at x and y, and facing a specified 
@@ -31,6 +32,7 @@ public class Enemy {
         * @param width      X-stretch.
         * @param height     Y-stretch.
         * @param direction  String referencing up, down, left or right.
+        * @param game       PlayPanel of the game being displayed.
         * @postcondition    Enemy has been initialized.
         */
         this.x = x;
@@ -38,7 +40,9 @@ public class Enemy {
         this.height = height;
         this.width = width;
         this.direction = direction;
-        cooldown = 0;
+        this.game = game;
+        this.destroyed = false;
+        this.cooldown = 0;
         
         switch(direction){
             case "up" -> {
@@ -68,9 +72,6 @@ public class Enemy {
         }
     }
     
-  
-    
-    
     public void draw(Graphics2D gtd) {
         /**
         * Function will draw the enemy using its data.
@@ -81,8 +82,26 @@ public class Enemy {
         gtd.setColor(Color.ORANGE);
         gtd.fillPolygon(shape);
         
+        // Countor
         gtd.setColor(Color.BLACK);
         gtd.drawPolygon(shape);
+    }
+    
+    public void checkShotAt(){
+        /**
+        * Function will check if a projectile hit the enemy.
+        * If a projectile hits the enemy, erase it and prevent it from shooting.
+        * @precondition     Display and enemy exists.
+        * @postcondition    Enemy was destroyed if hit.
+        */
+        for(int i = 0; i < game.projList.size(); i++){
+            Projectile proj = game.projList.get(i);
+            if(shape.intersects(proj.hitBox)) {
+                game.projList.remove(i);
+                shape.reset();
+                this.destroyed = true;
+            }
+        }
     }
     
     public void increaseCooldown(){
