@@ -31,7 +31,7 @@ public class Projectile {
         hitBox = new Rectangle(x, y, width, height);
     }
     
-    public void set(){
+    public void activate(){
         x += xspeed;
         y += yspeed;
         hitBox.x = x;
