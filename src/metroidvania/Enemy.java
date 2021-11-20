@@ -87,21 +87,35 @@ public class Enemy {
         gtd.drawPolygon(shape);
     }
     
-    public void checkShotAt(){
+    public boolean checkShotAt(){
         /**
         * Function will check if a projectile hit the enemy.
-        * If a projectile hits the enemy, erase it and prevent it from shooting.
+        * If a projectile hits the enemy, destroy it.
         * @precondition     Display and enemy exists.
         * @postcondition    Enemy was destroyed if hit.
+        * @return           Function returns true if an enemy was destroyed.
         */
         for(int i = 0; i < game.projList.size(); i++){
             Projectile proj = game.projList.get(i);
             if(shape.intersects(proj.hitBox)) {
                 game.projList.remove(i);
-                shape.reset();
-                this.destroyed = true;
+                destroy();
+                return true;
             }
         }
+        
+        return false;
+    }
+    
+    public void destroy(){
+        /**
+        * Function will hide the enemy from the game area and mark it as 
+        * destroyed.
+        * @precondition     Display and enemy exists.
+        * @postcondition    Enemy was hidden and marked.
+        */
+        shape.reset();
+        this.destroyed = true;
     }
     
     public void increaseCooldown(){
