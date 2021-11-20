@@ -39,7 +39,6 @@ public class Player {
         * @precondition     Player and game area exists.
         * @postcondition    Player has been modified accordingly.
         */
-        
         //updating hitbox as samus moves
         x += xspeed;
         y += yspeed;
@@ -118,7 +117,7 @@ public class Player {
                 }
         }
         
-        // collision with projectiles
+        // Player touched projectile, damage player.
         for(int i = 0; i < game.projList.size(); i++){
             Projectile proj = game.projList.get(i);
             if(hitBox.intersects(proj.hitBox)){
@@ -149,7 +148,7 @@ public class Player {
             move(600, 500);
         }
         
-        // Player is in enemy's shooting line
+        // Player is in enemy's shooting line, make enemy shoot accordingly
         for(int i = 0; i < game.enemyList.size(); i++){
             Enemy oneEnemy = game.enemyList.get(i);
             
@@ -159,13 +158,13 @@ public class Player {
                         if(y > oneEnemy.y){
                             Projectile shot = new Projectile(oneEnemy.x + 20, oneEnemy.y + 50, 0, 4, game);
                             game.projList.add(shot);
-                            shot.set();
+                            shot.activate();
                             oneEnemy.resetCooldown();
                         }
                         else {
                             Projectile shot = new Projectile(oneEnemy.x + 20, oneEnemy.y - 50, 0, -4, game);
                             game.projList.add(shot);
-                            shot.set();
+                            shot.activate();
                             oneEnemy.resetCooldown();
                         }
                     }
@@ -176,16 +175,30 @@ public class Player {
                         if(x > oneEnemy.x){
                             Projectile shot = new Projectile(oneEnemy.x + 50, oneEnemy.y + 20 , 4, 0, game);
                             game.projList.add(shot);
-                            shot.set();
+                            shot.activate();
                             oneEnemy.resetCooldown();
                         }
                         else {
                             Projectile shot = new Projectile(oneEnemy.x - 12, oneEnemy.y + 20, -4, 0, game);
                             game.projList.add(shot);
-                            shot.set();
+                            shot.activate();
                             oneEnemy.resetCooldown();
                         }
                     }
+                }
+            }
+        }
+        
+        // Player touched enemy, destroy enemy, damage player and move player to 
+        //area start.
+        for(int i = 0; i < game.enemyList.size(); i++) {
+            Enemy oneEnemy = game.enemyList.get(i);
+            
+            if(!oneEnemy.destroyed) {
+                if(oneEnemy.shape.intersects(hitBox)) {
+                    health = health/2;
+                    move(600, 500);
+                    oneEnemy.destroy();
                 }
             }
         }
@@ -193,15 +206,17 @@ public class Player {
     
     public void move(int x, int y){
         /**
-        * Function will teleport the player to the specified location.
+        * Function will teleport the player to the specified location and stop 
+        * all movement.
         * @param x          Integer of new x position.
         * @param y          Integer of new y position.
         * @precondition     Game exists.
         * @postcondition    Player has been moved.
         */
-        
         this.x = x;
         this.y = y;
+        xspeed = 0;
+        yspeed = 0;
     }
     
     public void drawPlayer(Graphics2D gtd){
