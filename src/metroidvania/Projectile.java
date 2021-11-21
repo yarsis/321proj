@@ -10,14 +10,14 @@ import java.awt.Rectangle;
 
 /**
  *
- * @author caden
+ * @author caden, Henry Schulz
  */
 public class Projectile {
-    int x,y;
-    int width, height;
-    double xspeed, yspeed;
-    Rectangle hitBox;
-    PlayPanel game;
+    private int x,y;
+    private int width, height;
+    private double xspeed, yspeed;
+    private Rectangle hitBox;
+    private PlayPanel game;
     
     public Projectile(int x, int y, int xspeed, int yspeed, PlayPanel game){
         this.game = game;
@@ -71,7 +71,7 @@ public class Projectile {
         }
     }
     
-    public void drawProj(Graphics2D gtd){
+    public void drawProj(Graphics2D gtd) {
         /**
         * Function will draw the player at its location.
         * @param gtd        Display area for the game.
@@ -80,5 +80,55 @@ public class Projectile {
         */
         gtd.setColor(Color.RED);
         gtd.fillRect(x, y, width, height);
+    }
+    
+    public Rectangle getHitBox() {
+        /**
+        * Function returns the hit box for the projectile.
+        * @precondition     Projectile has been initialized.
+        * @postcondition    Hit box has been returned.
+        * @return           Projectile's hit box.
+        */
+        return hitBox;
+    }
+    
+    public int getWidth() {
+        /**
+        * Function returns projectile's width.
+        * @precondition     Projectile has been initialized.
+        * @postcondition    Width has been returned.
+        * @return           Projectile width.
+        */
+        return width;
+    }
+    
+    public int getHeight() {
+        /**
+        * Function returns projectile's height.
+        * @precondition     Projectile has been initialized.
+        * @postcondition    Height has been returned.
+        * @return           Projectile height.
+        */
+        return height;
+    }
+    
+    public double getXSpeed() {
+        /**
+        * Function returns projectile's x speed.
+        * @precondition     Projectile has been initialized.
+        * @postcondition    X speed has been returned.
+        * @return           Projectile x speed.
+        */
+        return xspeed;
+    }
+    
+    public double getYSpeed() {
+        /**
+        * Function returns projectile's y speed.
+        * @precondition     Projectile has been initialized.
+        * @postcondition    Y speed has been returned.
+        * @return           Projectile y speed.
+        */
+        return yspeed;
     }
 }
