@@ -10,8 +10,8 @@ package metroidvania;
  * @author Henry Schulz
  */
 public class LevelMaker {
-    PlayPanel game;
-    int currentTerrain;
+    private PlayPanel game;
+    private int currentTerrain;
     
     public LevelMaker(PlayPanel game) {  
         this.game = game;      
