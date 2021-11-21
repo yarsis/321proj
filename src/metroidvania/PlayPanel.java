@@ -64,7 +64,7 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
                for(int i = 0; i < enemyList.size(); i++){
                     Enemy oneEnemy = enemyList.get(i);
                     oneEnemy.increaseCooldown();
-                    destroyedEnemy = oneEnemy.checkShotAt();
+                    if(oneEnemy.checkShotAt()) destroyedEnemy = true;
                }
                
                // Add points if an enemy is destroyed
