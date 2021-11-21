@@ -55,7 +55,7 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
                     if(!"pause".equals(state)) {
                         proj.activate();
                     }
-                    if(proj.xspeed == 0 && proj.yspeed == 0){
+                    if(proj.getXSpeed() == 0 && proj.getYSpeed() == 0){
                         projList.remove(i);
                     }
                 }
@@ -140,7 +140,7 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
                 gtd.setColor(Color.PINK);
                 g.setFont(new Font("Arial", Font.BOLD, 30));
                 gtd.drawString("Health:", temp, 35);
-                gtd.drawString(String.valueOf(samus.health), temp + 110, 35);
+                gtd.drawString(String.valueOf(samus.getHealth()), temp + 110, 35);
                 
                 // Draw points
                 temp = 487;
@@ -159,21 +159,22 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
 
     void keyPress(KeyEvent e) {
         /**
-        * Function will set player movement according to pressed key.
-        * Pressing the "Esc" button pauses the game.
+        * Function will check for button presses and change the game accordingly.
+        * Most keys will set player movement accordingly.
+        * Pressing the "Esc" key button pauses the game.
         * @param e          The button that has been pressed.
         * @precondition     Player exists.
         * @postcondition    Player moved accordingly.
         */
-        if(e.getKeyCode() == KeyEvent.VK_SPACE) samus.keyUp = true;
+        if(e.getKeyCode() == KeyEvent.VK_SPACE) samus.setKeyUp(true);
         
-        if(e.getKeyCode() == KeyEvent.VK_UP) samus.keyUp = true;
-        if(e.getKeyCode() == KeyEvent.VK_LEFT) samus.keyLeft = true;
-        if(e.getKeyCode() == KeyEvent.VK_RIGHT) samus.keyRight = true;
+        if(e.getKeyCode() == KeyEvent.VK_UP) samus.setKeyUp(true);
+        if(e.getKeyCode() == KeyEvent.VK_LEFT) samus.setKeyLeft(true);
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT) samus.setKeyRight(true);
         
-        if(e.getKeyChar() == 'w') samus.keyUp = true;
-        if(e.getKeyChar() == 'a') samus.keyLeft = true;
-        if(e.getKeyChar() == 'd') samus.keyRight = true;
+        if(e.getKeyChar() == 'w') samus.setKeyUp(true);
+        if(e.getKeyChar() == 'a') samus.setKeyLeft(true);
+        if(e.getKeyChar() == 'd') samus.setKeyRight(true);
         
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE) state = menu.switchPauseState(state);
     }
@@ -185,15 +186,15 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         * @precondition     Player exists.
         * @postcondition    Player stopped moving accordingly.
         */
-        if(e.getKeyCode() == KeyEvent.VK_SPACE) samus.keyUp = false;
+        if(e.getKeyCode() == KeyEvent.VK_SPACE) samus.setKeyUp(false);
         
-        if(e.getKeyCode() == KeyEvent.VK_UP) samus.keyUp = false;
-        if(e.getKeyCode() == KeyEvent.VK_LEFT) samus.keyLeft = false;
-        if(e.getKeyCode() == KeyEvent.VK_RIGHT) samus.keyRight = false;
+        if(e.getKeyCode() == KeyEvent.VK_UP) samus.setKeyUp(false);
+        if(e.getKeyCode() == KeyEvent.VK_LEFT) samus.setKeyLeft(false);
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT) samus.setKeyRight(false);
         
-        if(e.getKeyChar() == 'w') samus.keyUp = false;
-        if(e.getKeyChar() == 'a') samus.keyLeft = false;
-        if(e.getKeyChar() == 'd') samus.keyRight = false;
+        if(e.getKeyChar() == 'w') samus.setKeyUp(false);
+        if(e.getKeyChar() == 'a') samus.setKeyLeft(false);
+        if(e.getKeyChar() == 'd') samus.setKeyRight(false);
     }
 
     void mouseClicked(MouseEvent e) {
@@ -210,14 +211,14 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         */
         // Main menu
         if("menu".equals(state)) {
-            if(menu.playRect.contains(new Point(e.getPoint().x, e.getPoint().y - 27))) {
+            if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) {
                 state = "game";
             }
         }
         
         // Pause menu
         if("pause".equals(state)) {
-            if(menu.playRect.contains(new Point(e.getPoint().x, e.getPoint().y - 27))) {
+            if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) {
                 state = "game";
             }
         }
@@ -225,22 +226,22 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         // Player shot
         if ("game".equals(state)) {
             // Left
-            if(e.getPoint().x + 20 < samus.x) {
-                Projectile shot = new Projectile(samus.x - 20, samus.y + 20, -7, 0, this);
+            if(e.getPoint().x + 20 < samus.getX()) {
+                Projectile shot = new Projectile(samus.getX() - 20, samus.getY() + 20, -7, 0, this);
                 projList.add(shot);
                 shot.activate();
             }
             
             // Right
-            else if(samus.x < e.getPoint().x - 70) {
-                Projectile shot = new Projectile(samus.x + 70, samus.y + 20, 7, 0, this);
+            else if(samus.getX() < e.getPoint().x - 70) {
+                Projectile shot = new Projectile(samus.getX() + 70, samus.getY() + 20, 7, 0, this);
                 projList.add(shot);
                 shot.activate();
             }
             
             // Up
-            else if(e.getPoint().y < samus.y) {
-                Projectile shot = new Projectile(samus.x + 20, samus.y - 20, 0, -7, this);
+            else if(e.getPoint().y < samus.getY()) {
+                Projectile shot = new Projectile(samus.getX() + 20, samus.getY() - 20, 0, -7, this);
                 projList.add(shot);
                 shot.activate();
             }
