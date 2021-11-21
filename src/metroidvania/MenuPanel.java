@@ -19,12 +19,11 @@ import java.util.TimerTask;
  * @author caden, Henry Schulz
  */
 public class MenuPanel extends javax.swing.JPanel implements ActionListener{
-    Timer newTimer;
-    Rectangle playRect;
-    Rectangle scoreRect;
-    Rectangle saveRect;
-    Rectangle exitRect;
-    boolean startgame = false;
+    private Timer newTimer;
+    private Rectangle playRect;
+    private Rectangle scoreRect;
+    private Rectangle saveRect;
+    private Rectangle exitRect;
     
     public MenuPanel() {
         newTimer = new Timer();
@@ -151,5 +150,15 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         
+    }
+    
+    public Rectangle getPlayRect() {
+        /**
+        * Function returns the rectangle for the play button.
+        * @precondition     Menu has been initialized.
+        * @postcondition    Rectangle of the play button.
+        * @return           The rectangle representing the play button.
+        */
+        return playRect;
     }
 }
