@@ -111,6 +111,9 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
             case "pause" -> {
                 menu.paintPause(g);
             }
+            case "dead" -> {
+                menu.paintGameOver(g);
+            }
             case "game" -> {
                 samus.drawPlayer(gtd);
                 
