@@ -14,13 +14,13 @@ import java.awt.Polygon;
  * @author Henry Schulz
  */
 public class Enemy {
-    int x, y;
-    int width, height;
-    int cooldown;
-    boolean destroyed;
-    String direction;
-    Polygon shape;
-    PlayPanel game;
+    private int x, y;
+    private int width, height;
+    private int cooldown;
+    private boolean destroyed;
+    private String direction;
+    private Polygon shape;
+    private PlayPanel game;
     
     public Enemy(int x, int y, int width, int height, String direction, PlayPanel game) {
         /**
@@ -97,7 +97,7 @@ public class Enemy {
         */
         for(int i = 0; i < game.projList.size(); i++){
             Projectile proj = game.projList.get(i);
-            if(shape.intersects(proj.hitBox)) {
+            if(shape.intersects(proj.getHitBox())) {
                 game.projList.remove(i);
                 destroy();
                 return true;
@@ -129,5 +129,74 @@ public class Enemy {
     public int getCooldown(){
         return cooldown;
     }
-   
+    
+    public boolean isDestroyed() {
+        /**
+        * Function returns true if the enemy has been destroyed.
+        * @precondition     Enemy has been initialized.
+        * @postcondition    Destroyed status has been returned.
+        * @return           True if enemy is destroyed.
+        */
+        return destroyed;
+    }
+    
+    public int getX() {
+        /**
+        * Function returns enemy's x position.
+        * @precondition     Enemy has been initialized.
+        * @postcondition    X position has been returned.
+        * @return           X position.
+        */
+        return x;
+    }
+    
+    public int getY() {
+        /**
+        * Function returns enemy's y position.
+        * @precondition     Enemy has been initialized.
+        * @postcondition    Y position has been returned.
+        * @return           Y position.
+        */
+        return y;
+    }
+    
+    public String getDirection() {
+        /**
+        * Function returns enemy's direction.
+        * @precondition     Enemy has been initialized.
+        * @postcondition    Direction has been returned.
+        * @return           String that represents direction.
+        */
+        return direction;
+    }
+    
+    public int getWidth() {
+        /**
+        * Function returns enemy's width.
+        * @precondition     Enemy has been initialized.
+        * @postcondition    Width has been returned.
+        * @return           Enemy width.
+        */
+        return width;
+    }
+    
+    public int getHeight() {
+        /**
+        * Function returns enemy's height.
+        * @precondition     Enemy has been initialized.
+        * @postcondition    Height has been returned.
+        * @return           Enemy height.
+        */
+        return height;
+    }
+    
+    public Polygon getShape() {
+        /**
+        * Function returns enemy's shape.
+        * @precondition     Enemy has been initialized.
+        * @postcondition    Shape has been returned.
+        * @return           Enemy shape.
+        */
+        return shape;
+    }
 }
