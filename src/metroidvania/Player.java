@@ -13,13 +13,13 @@ import java.awt.Rectangle;
  * @author caden, Henry Schulz
  */
 public class Player {
-    PlayPanel game;
-    int x, y;
-    int width, height;
-    int health;
-    double xspeed, yspeed;
-    Rectangle hitBox;
-    boolean keyLeft, keyRight, keyDown, keyUp;
+    private PlayPanel game;
+    private int x, y;
+    private int width, height;
+    private int health;
+    private double xspeed, yspeed;
+    private Rectangle hitBox;
+    private boolean keyLeft, keyRight, keyUp;
     
     public Player(int x, int y, PlayPanel game){
         this.game = game;   //saving panel object passed into player object
@@ -120,7 +120,7 @@ public class Player {
         // Player touched projectile, damage player.
         for(int i = 0; i < game.projList.size(); i++){
             Projectile proj = game.projList.get(i);
-            if(hitBox.intersects(proj.hitBox)){
+            if(hitBox.intersects(proj.getHitBox())){
                 game.projList.remove(i);
                 health -= 20;
             }
@@ -147,21 +147,21 @@ public class Player {
             health = 0;
         }
         
-        // Player is in enemy's shooting line, make enemy shoot accordingly
+        // Player is in enemy's shooting line, make enemy shoot accordingly.
         for(int i = 0; i < game.enemyList.size(); i++){
             Enemy oneEnemy = game.enemyList.get(i);
             
-            if(!oneEnemy.destroyed) {
-                if("up".equals(oneEnemy.direction) || "down".equals(oneEnemy.direction)){
-                    if((oneEnemy.x - width + 20) <= x && x <= (oneEnemy.x + oneEnemy.width - 20) && oneEnemy.getCooldown() > 100){
-                        if(y > oneEnemy.y){
-                            Projectile shot = new Projectile(oneEnemy.x + 20, oneEnemy.y + 50, 0, 4, game);
+            if(!oneEnemy.isDestroyed()) {
+                if("up".equals(oneEnemy.getDirection()) || "down".equals(oneEnemy.getDirection())){
+                    if((oneEnemy.getX() - width + 20) <= x && x <= (oneEnemy.getX() + oneEnemy.getWidth() - 20) && oneEnemy.getCooldown() > 100){
+                        if(y > oneEnemy.getY()){
+                            Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() + 50, 0, 4, game);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
                         else {
-                            Projectile shot = new Projectile(oneEnemy.x + 20, oneEnemy.y - 50, 0, -4, game);
+                            Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() - 50, 0, -4, game);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
@@ -169,16 +169,16 @@ public class Player {
                     }
                 }
 
-                if("left".equals(oneEnemy.direction) || "right".equals(oneEnemy.direction)){
-                    if((oneEnemy.y - height + 20) <= y && y <= (oneEnemy.y + oneEnemy.height - 20) && oneEnemy.getCooldown() > 100){
-                        if(x > oneEnemy.x){
-                            Projectile shot = new Projectile(oneEnemy.x + 50, oneEnemy.y + 20 , 4, 0, game);
+                if("left".equals(oneEnemy.getDirection()) || "right".equals(oneEnemy.getDirection())){
+                    if((oneEnemy.getY() - height + 20) <= y && y <= (oneEnemy.getY() + oneEnemy.getHeight() - 20) && oneEnemy.getCooldown() > 100){
+                        if(x > oneEnemy.getX()){
+                            Projectile shot = new Projectile(oneEnemy.getX() + 50, oneEnemy.getY() + 20 , 4, 0, game);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
                         else {
-                            Projectile shot = new Projectile(oneEnemy.x - 12, oneEnemy.y + 20, -4, 0, game);
+                            Projectile shot = new Projectile(oneEnemy.getX() - 12, oneEnemy.getY() + 20, -4, 0, game);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
@@ -193,12 +193,12 @@ public class Player {
         for(int i = 0; i < game.enemyList.size(); i++) {
             Enemy oneEnemy = game.enemyList.get(i);
             
-            if(!oneEnemy.destroyed) {
-                if(oneEnemy.shape.intersects(hitBox)) {
+            if(!oneEnemy.isDestroyed()) {
+                if(oneEnemy.getShape().intersects(hitBox)) {
                     health = health/2;
                     oneEnemy.destroy();
                     
-                    if(x < oneEnemy.x) {
+                    if(x < oneEnemy.getX()) {
                         xspeed = -7;
                     }
                     else {
@@ -238,5 +238,65 @@ public class Player {
         */
         gtd.setColor(Color.PINK);
         gtd.fillRect(x, y, width, height);
+    }
+    
+    public int getX() {
+        /**
+        * Function returns player's x position.
+        * @precondition     Player class has been initialized.
+        * @postcondition    X position has been returned.
+        * @return           X position.
+        */
+        return x;
+    }
+    
+    public int getY() {
+        /**
+        * Function returns player's y position.
+        * @precondition     Player class has been initialized.
+        * @postcondition    Y position has been returned.
+        * @return           Y position.
+        */
+        return y;
+    }
+    
+    public int getHealth() {
+        /**
+        * Function returns player's health.
+        * @precondition     Player class has been initialized.
+        * @postcondition    Health has been returned.
+        * @return           Health.
+        */
+        return health;
+    }
+    
+    public void setKeyLeft(boolean status) {
+        /**
+        * Function sets the status for left movement.
+        * @param status     boolean that represents the status for movement.
+        * @precondition     Player class has been initialized.
+        * @postcondition    Player starts moving left.
+        */
+        this.keyLeft = status;
+    }
+    
+    public void setKeyRight(boolean status) {
+        /**
+        * Function sets the status for right movement.
+        * @param status     boolean that represents the status for movement.
+        * @precondition     Player class has been initialized.
+        * @postcondition    Player starts moving right.
+        */
+        this.keyRight = status;
+    }
+    
+    public void setKeyUp(boolean status) {
+        /**
+        * Function sets the status for jump.
+        * @param status     boolean that represents the status for movement.
+        * @precondition     Player class has been initialized.
+        * @postcondition    Player starts jumping.
+        */
+        this.keyUp = status;
     }
 }
