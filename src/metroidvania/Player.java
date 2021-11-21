@@ -142,10 +142,9 @@ public class Player {
             yspeed = 0;
         }
         
-        // Player fell off screen, damage player and move to area start.
+        // Player fell off screen, kill player.
         if(700 <= hitBox.y) {
-            health = health/2;
-            move(600, 500);
+            health = 0;
         }
         
         // Player is in enemy's shooting line, make enemy shoot accordingly
@@ -189,18 +188,29 @@ public class Player {
             }
         }
         
-        // Player touched enemy, destroy enemy, damage player and move player to 
-        //area start.
+        // Player touched enemy, so destroy enemy, damage player and propulse 
+        //player depending on relative position to enemy.
         for(int i = 0; i < game.enemyList.size(); i++) {
             Enemy oneEnemy = game.enemyList.get(i);
             
             if(!oneEnemy.destroyed) {
                 if(oneEnemy.shape.intersects(hitBox)) {
                     health = health/2;
-                    move(600, 500);
                     oneEnemy.destroy();
+                    
+                    if(x < oneEnemy.x) {
+                        xspeed = -7;
+                    }
+                    else {
+                        xspeed = 7;
+                    }
                 }
             }
+        }
+        
+        // Player is dead
+        if (health <= 0) {
+            game.state = "dead";
         }
     }
     
