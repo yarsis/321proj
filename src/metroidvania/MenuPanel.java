@@ -22,6 +22,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener{
     Timer newTimer;
     Rectangle playRect;
     Rectangle scoreRect;
+    Rectangle saveRect;
     Rectangle exitRect;
     boolean startgame = false;
     
@@ -89,7 +90,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener{
         gtd.fillRect(276, 401, 149, 49);
         
         g.setFont(new Font("Ariel", Font.PLAIN, 77));
-        gtd.setColor(Color.CYAN);
+        gtd.setColor(Color.ORANGE);
         gtd.drawString("PAUSED", 190, 180);
         
         gtd.setColor(Color.BLACK);
@@ -115,6 +116,36 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener{
         }
         
         return state;
+    }
+    
+    public void paintGameOver(Graphics g) {
+        /**
+        * Function will draw a game over menu with "save score" and "exit" 
+        * buttons.
+        * @param g          I don't know.
+        * @precondition     Game area exists.
+        * @postcondition    Pause menu is drawn.
+        */
+        super.paint(g); //prevent flickering
+        Graphics2D gtd = (Graphics2D) g;
+        
+        saveRect = new Rectangle(275, 340, 150, 50);
+        exitRect = new Rectangle(275, 400, 150, 50);
+        
+        gtd.drawRect(275, 340, 150, 50);
+        gtd.drawRect(275, 400, 150, 50);
+        gtd.setColor(Color.WHITE);
+        gtd.fillRect(276, 341, 149, 49);
+        gtd.fillRect(276, 401, 149, 49);
+        
+        g.setFont(new Font("Ariel", Font.PLAIN, 77));
+        gtd.setColor(Color.MAGENTA);
+        gtd.drawString("Game Over", 155, 180);
+        
+        gtd.setColor(Color.BLACK);
+        g.setFont(new Font("Ariel", Font.PLAIN, 12));
+        gtd.drawString("SAVE SCORE", 313, 370);
+        gtd.drawString("EXIT", 338, 430);
     }
     
     @Override
