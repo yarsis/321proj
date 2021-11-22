@@ -44,7 +44,7 @@ public class Enemy {
         this.destroyed = false;
         this.cooldown = 0;
         
-        switch(direction){
+        switch(direction) {
             case "up" -> {
                 int coordinatesX[] = {x, x+width/2, x+width};
                 int coordinatesY[] = {y+height, y, y+height};
@@ -87,7 +87,7 @@ public class Enemy {
         gtd.drawPolygon(shape);
     }
     
-    public boolean checkShotAt(){
+    public boolean checkShotAt() {
         /**
         * Function will check if a projectile hit the enemy.
         * If a projectile hits the enemy, destroy it.
@@ -95,7 +95,7 @@ public class Enemy {
         * @postcondition    Enemy was destroyed if hit.
         * @return           Function returns true if an enemy was destroyed.
         */
-        for(int i = 0; i < game.projList.size(); i++){
+        for(int i = 0; i < game.projList.size(); i++) {
             Projectile proj = game.projList.get(i);
             if(shape.intersects(proj.getHitBox())) {
                 game.projList.remove(i);
@@ -107,7 +107,7 @@ public class Enemy {
         return false;
     }
     
-    public void destroy(){
+    public void destroy() {
         /**
         * Function will hide the enemy from the game area and mark it as 
         * destroyed.
@@ -118,15 +118,15 @@ public class Enemy {
         this.destroyed = true;
     }
     
-    public void increaseCooldown(){
+    public void increaseCooldown() {
         cooldown += 1;
     }
     
-    public void resetCooldown(){
+    public void resetCooldown() {
         cooldown = 0;
     }
     
-    public int getCooldown(){
+    public int getCooldown() {
         return cooldown;
     }
     
