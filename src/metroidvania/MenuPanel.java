@@ -18,8 +18,8 @@ import java.util.TimerTask;
  *
  * @author caden, Henry Schulz
  */
-public class MenuPanel extends javax.swing.JPanel implements ActionListener{
-    private Timer newTimer;
+public class MenuPanel extends javax.swing.JPanel implements ActionListener {
+    private final Timer newTimer;
     private Rectangle playRect;
     private Rectangle scoreRect;
     private Rectangle saveRect;
@@ -27,7 +27,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener{
     
     public MenuPanel() {
         newTimer = new Timer();
-        newTimer.schedule(new TimerTask(){
+        newTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 repaint();
@@ -117,7 +117,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener{
         return state;
     }
     
-    public void paintGameOver(Graphics g) {
+    public void paintGameOver(int points, Graphics g) {
         /**
         * Function will draw a game over menu with "save score" and "exit" 
         * buttons.
@@ -127,6 +127,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener{
         */
         super.paint(g); //prevent flickering
         Graphics2D gtd = (Graphics2D) g;
+        int xPosition;
         
         saveRect = new Rectangle(275, 340, 150, 50);
         exitRect = new Rectangle(275, 400, 150, 50);
@@ -140,6 +141,12 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener{
         g.setFont(new Font("Ariel", Font.PLAIN, 77));
         gtd.setColor(Color.MAGENTA);
         gtd.drawString("Game Over", 155, 180);
+        
+        xPosition = 250;
+        gtd.setColor(Color.ORANGE);
+        g.setFont(new Font("Arial", Font.PLAIN, 57));
+        gtd.drawString("Points:", xPosition, 271);
+        gtd.drawString(String.valueOf(points), xPosition + 187, 271);
         
         gtd.setColor(Color.BLACK);
         g.setFont(new Font("Ariel", Font.PLAIN, 12));
@@ -156,9 +163,39 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener{
         /**
         * Function returns the rectangle for the play button.
         * @precondition     Menu has been initialized.
-        * @postcondition    Rectangle of the play button.
+        * @postcondition    Rectangle of the play button was returned.
         * @return           The rectangle representing the play button.
         */
         return playRect;
+    }
+    
+    public Rectangle getExitRect() {
+        /**
+        * Function returns the rectangle for the exit button.
+        * @precondition     Menu has been initialized.
+        * @postcondition    Rectangle of the exit button was returned.
+        * @return           The rectangle representing the exit button.
+        */
+        return exitRect;
+    }
+    
+    public Rectangle getScoreRect() {
+        /**
+        * Function returns the rectangle for the score button.
+        * @precondition     Menu has been initialized.
+        * @postcondition    Rectangle of the score button was returned.
+        * @return           The rectangle representing the score button.
+        */
+        return scoreRect;
+    }
+    
+    public Rectangle getSaveRect() {
+        /**
+        * Function returns the rectangle for the "save score" button.
+        * @precondition     Menu has been initialized.
+        * @postcondition    Rectangle of the "save score" button was returned.
+        * @return           The rectangle representing the "save score" button.
+        */
+        return saveRect;
     }
 }
