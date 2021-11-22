@@ -13,15 +13,15 @@ import java.awt.Rectangle;
  * @author caden, Henry Schulz
  */
 public class Player {
-    private PlayPanel game;
+    private final PlayPanel game;
     private int x, y;
-    private int width, height;
+    private final int width, height;
     private int health;
     private double xspeed, yspeed;
-    private Rectangle hitBox;
+    private final Rectangle hitBox;
     private boolean keyLeft, keyRight, keyUp;
     
-    public Player(int x, int y, PlayPanel game){
+    public Player(int x, int y, PlayPanel game) {
         this.game = game;   //saving panel object passed into player object
         this.x = x;
         this.y = y;
@@ -32,7 +32,7 @@ public class Player {
         hitBox = new Rectangle(x, y, width, height);
     }
     
-    public void set(){
+    public void set() {
         /**
         * Function will modify the player according to pressed keys and 
         * interaction with the game.
@@ -45,13 +45,13 @@ public class Player {
         hitBox.x = x;
         hitBox.y = y;
         
-        if((keyLeft && keyRight) || (!keyLeft && !keyRight)){
+        if((keyLeft && keyRight) || (!keyLeft && !keyRight)) {
             xspeed *= 0.7;
         }
-        else if(keyLeft && !keyRight){
+        else if(keyLeft && !keyRight) {
             xspeed -= 1;
         }
-        else if(keyRight && !keyLeft){
+        else if(keyRight && !keyLeft) {
             xspeed += 1;
         }
         
@@ -64,9 +64,9 @@ public class Player {
         if(xspeed < -7) xspeed = -7;
         
         // Check if player is on ground
-        if(keyUp){
+        if(keyUp) {
             hitBox.y += 1;
-            for(int i = 0; i < game.gameTerrain.size(); i++){
+            for(int i = 0; i < game.gameTerrain.size(); i++) {
                 Terrain ter = game.gameTerrain.get(i);
                 if(ter.hitBox.intersects(hitBox)) yspeed = -8;
             }
@@ -85,14 +85,12 @@ public class Player {
         *this same procedure applies to vertical collision
         */
         hitBox.x += xspeed;
-        for(int i = 0; i < game.gameTerrain.size(); i++){
+        for(int i = 0; i < game.gameTerrain.size(); i++) {
                 Terrain ter = game.gameTerrain.get(i);
-                if(hitBox.intersects(ter.hitBox)){
+                if(hitBox.intersects(ter.hitBox)) {
                     hitBox.x -= xspeed;
                     
-                    while(!ter.hitBox.intersects(hitBox)){
-                        hitBox.x += Math.signum(xspeed);
-                    }
+                    while(!ter.hitBox.intersects(hitBox)) hitBox.x += Math.signum(xspeed);
                     
                     hitBox.x -= Math.signum(xspeed);
                     xspeed = 0;
@@ -102,28 +100,17 @@ public class Player {
         
         //vertical collision detection
         hitBox.y += yspeed;
-        for(int i = 0; i < game.gameTerrain.size(); i++){
+        for(int i = 0; i < game.gameTerrain.size(); i++) {
                 Terrain ter = game.gameTerrain.get(i);
-                if(hitBox.intersects(ter.hitBox)){
+                if(hitBox.intersects(ter.hitBox)) {
                     hitBox.y -= yspeed;
                     
-                    while(!ter.hitBox.intersects(hitBox)){
-                        hitBox.y += Math.signum(yspeed);
-                    }
+                    while(!ter.hitBox.intersects(hitBox)) hitBox.y += Math.signum(yspeed);
                     
                     hitBox.y -= Math.signum(yspeed);
                     yspeed = 0;
                     y = hitBox.y;
                 }
-        }
-        
-        // Player touched projectile, damage player.
-        for(int i = 0; i < game.projList.size(); i++){
-            Projectile proj = game.projList.get(i);
-            if(hitBox.intersects(proj.getHitBox())){
-                game.projList.remove(i);
-                health -= 20;
-            }
         }
         
         // Player reached end of terrain, generate new area.
@@ -133,28 +120,22 @@ public class Player {
         }
         
         // Horizontal movement limiter.
-        if(hitBox.x <= 0 || 630 <= hitBox.x) {
-            xspeed = 0;
-        }
+        if(hitBox.x <= 0 || 630 <= hitBox.x) xspeed = 0;
         
         // Ceiling movement limiter.
-        if(hitBox.y <= 0) {
-            yspeed = 0;
-        }
+        if(hitBox.y <= 0) yspeed = 0;
         
         // Player fell off screen, kill player.
-        if(700 <= hitBox.y) {
-            health = 0;
-        }
+        if(700 <= hitBox.y) health = 0;
         
         // Player is in enemy's shooting line, make enemy shoot accordingly.
-        for(int i = 0; i < game.enemyList.size(); i++){
+        for(int i = 0; i < game.enemyList.size(); i++) {
             Enemy oneEnemy = game.enemyList.get(i);
             
             if(!oneEnemy.isDestroyed()) {
-                if("up".equals(oneEnemy.getDirection()) || "down".equals(oneEnemy.getDirection())){
+                if("up".equals(oneEnemy.getDirection()) || "down".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getX() - width + 20) <= x && x <= (oneEnemy.getX() + oneEnemy.getWidth() - 20) && oneEnemy.getCooldown() > 100){
-                        if(y > oneEnemy.getY()){
+                        if(y > oneEnemy.getY()) {
                             Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() + 50, 0, 4, game);
                             game.projList.add(shot);
                             shot.activate();
@@ -169,9 +150,9 @@ public class Player {
                     }
                 }
 
-                if("left".equals(oneEnemy.getDirection()) || "right".equals(oneEnemy.getDirection())){
+                if("left".equals(oneEnemy.getDirection()) || "right".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getY() - height + 20) <= y && y <= (oneEnemy.getY() + oneEnemy.getHeight() - 20) && oneEnemy.getCooldown() > 100){
-                        if(x > oneEnemy.getX()){
+                        if(x > oneEnemy.getX()) {
                             Projectile shot = new Projectile(oneEnemy.getX() + 50, oneEnemy.getY() + 20 , 4, 0, game);
                             game.projList.add(shot);
                             shot.activate();
@@ -188,6 +169,17 @@ public class Player {
             }
         }
         
+        // Player touched projectile, damage player according to score.
+        for(int i = 0; i < game.projList.size(); i++) {
+            Projectile proj = game.projList.get(i);
+            if(hitBox.intersects(proj.getHitBox())) {
+                game.projList.remove(i);
+                
+                if(game.points < 200) health -= 20;
+                else health -= game.points/10;
+            }
+        }
+        
         // Player touched enemy, so destroy enemy, damage player and propulse 
         //player depending on relative position to enemy.
         for(int i = 0; i < game.enemyList.size(); i++) {
@@ -198,23 +190,17 @@ public class Player {
                     health = health/2;
                     oneEnemy.destroy();
                     
-                    if(x < oneEnemy.getX()) {
-                        xspeed = -7;
-                    }
-                    else {
-                        xspeed = 7;
-                    }
+                    if(x < oneEnemy.getX()) xspeed = -7;
+                    else xspeed = 7;
                 }
             }
         }
         
         // Player is dead
-        if (health <= 0) {
-            game.state = "dead";
-        }
+        if (health <= 0) game.state = "dead";
     }
     
-    public void move(int x, int y){
+    public void move(int x, int y) {
         /**
         * Function will teleport the player to the specified location and stop 
         * all movement.
@@ -229,7 +215,7 @@ public class Player {
         yspeed = 0;
     }
     
-    public void drawPlayer(Graphics2D gtd){
+    public void drawPlayer(Graphics2D gtd) {
         /**
         * Function will draw the player at its location.
         * @param gtd        Display area for the game.
