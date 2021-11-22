@@ -21,7 +21,7 @@ import java.util.TimerTask;
  *
  * @author caden, Henry Schulz
  */
-public class PlayPanel extends javax.swing.JPanel implements ActionListener{
+public final class PlayPanel extends javax.swing.JPanel implements ActionListener {
     Player samus;
     Timer newTimer;
     LevelMaker makeLevel = new LevelMaker(this);
@@ -50,24 +50,24 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
                 repaint();
                 
                 // Draw each projectile, and move them if game is not paused
-                for(int i = 0; i < projList.size(); i++){
+                for(int i = 0; i < projList.size(); i++) {
                     Projectile proj = projList.get(i);
                     if(!"pause".equals(state)) {
                         proj.activate();
                     }
-                    if(proj.getXSpeed() == 0 && proj.getYSpeed() == 0){
+                    if(proj.getXSpeed() == 0 && proj.getYSpeed() == 0) {
                         projList.remove(i);
                     }
                 }
                 
                 // Draw each enemy and check if one was destoyed
-               for(int i = 0; i < enemyList.size(); i++){
+               for(int i = 0; i < enemyList.size(); i++) {
                     Enemy oneEnemy = enemyList.get(i);
                     oneEnemy.increaseCooldown();
                     if(oneEnemy.checkShotAt()) destroyedEnemy = true;
                }
                
-               // Add points if an enemy is destroyed
+               // Add points if an enemy is shot at
                if(destroyedEnemy) {
                    points += 10;
                    destroyedEnemy = false;
@@ -86,9 +86,7 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         */
         makeLevel.makeTerrain(firstLevel);
         
-        if(firstLevel) {
-            firstLevel = false;
-        }
+        if(firstLevel) firstLevel = false;
     }
     
     @Override
@@ -112,7 +110,7 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
                 menu.paintPause(g);
             }
             case "dead" -> {
-                menu.paintGameOver(g);
+                menu.paintGameOver(points, g);
             }
             case "game" -> {
                 samus.drawPlayer(gtd);
@@ -200,8 +198,7 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
     void mouseClicked(MouseEvent e) {
         /**
         * Function will allow user to click on the menu and the game area.
-        * If clicked on a menu, check which button was pressed an act 
-        * accordingly.
+        * If a menu button is clicked, act accordingly.
         * If clicked on the game area, the player will shoot according to 
         * mouse position in relation to player.
         * The shots only happen if the mouse is far enough from the player.
@@ -209,19 +206,9 @@ public class PlayPanel extends javax.swing.JPanel implements ActionListener{
         * @precondition     Player and game exists.
         * @postcondition    Menu was interacted OR player shot.
         */
-        // Main menu
-        if("menu".equals(state)) {
-            if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) {
-                state = "game";
-            }
-        }
-        
-        // Pause menu
-        if("pause".equals(state)) {
-            if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) {
-                state = "game";
-            }
-        }
+        // Menu buttons
+        if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "game";
+        if(menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) System.exit(0);
         
         // Player shot
         if ("game".equals(state)) {
