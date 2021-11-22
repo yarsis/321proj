@@ -10,7 +10,7 @@ package metroidvania;
  * @author Henry Schulz
  */
 public class LevelMaker {
-    private PlayPanel game;
+    private final PlayPanel game;
     private int currentTerrain;
     
     public LevelMaker(PlayPanel game) {  
@@ -18,7 +18,7 @@ public class LevelMaker {
         this.currentTerrain = 0;
     }
     
-    public void makeTerrain(boolean firstLevel){
+    public void makeTerrain(boolean firstLevel) {
         /**
         * Function will delete the current terrain and all its contents, and 
         * use a random integer to select a new terrain.
@@ -58,7 +58,7 @@ public class LevelMaker {
         currentTerrain = select;
     }
     
-    public int randomInteger(int min, int max, int avoid, boolean firstLevel){
+    public int randomInteger(int min, int max, int avoid, boolean firstLevel) {
         /**
         * Function will return a random integer within the specified limits, 
         avoiding the specified number.
@@ -74,33 +74,33 @@ public class LevelMaker {
         */
         double value;
         
-        if (firstLevel){
+        if (firstLevel) {
             return 101;
         }
         
-        while(true){
+        while(true) {
             value = Math.random()*100;
             
             if(min <= value && value < max + 1) {   // +1 because of truncation
-                if ((int)value != avoid){
+                if ((int)value != avoid) {
                     return (int)value;
                 }
             }
         }
     }
     
-    public void terrainStart(){
+    public void terrainStart() {
         //One way
-        for(int x = 50; x <= 600; x += 50){  // Ceiling
+        for(int x = 50; x <= 600; x += 50) {  // Ceiling
             game.gameTerrain.add(new Terrain(x, 0, 50, 50));
         }
-        for(int y = 550; 0 < y; y -= 50){   // Right outer wall
+        for(int y = 550; 0 < y; y -= 50) {   // Right outer wall
             game.gameTerrain.add(new Terrain(600, y, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Left outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Left outer wall
             game.gameTerrain.add(new Terrain(50, y, 50, 50));
         }
-        for(int i = 0; i <= 600; i += 50){   // Floor
+        for(int i = 0; i <= 600; i += 50) {   // Floor
             game.gameTerrain.add(new Terrain(i, 600, 50, 50));
         }
         
@@ -111,18 +111,18 @@ public class LevelMaker {
         game.enemyList.add(new Enemy(100, 50, 50, 50, "down", game));
     }
     
-    public void terrain0(){
+    public void terrain0() {
         //Blocks on ground
-        for(int x = 50; x <= 600; x += 50){  // Ceiling
+        for(int x = 50; x <= 600; x += 50) {  // Ceiling
             game.gameTerrain.add(new Terrain(x, 0, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Right outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Right outer wall
             game.gameTerrain.add(new Terrain(600, y, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Left outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Left outer wall
             game.gameTerrain.add(new Terrain(50, y, 50, 50));
         }
-        for(int i = 0; i < 700; i += 50){   // Floor
+        for(int i = 0; i < 700; i += 50) {   // Floor
             game.gameTerrain.add(new Terrain(i, 600, 50, 50));
         }
         
@@ -135,21 +135,21 @@ public class LevelMaker {
         game.enemyList.add(new Enemy(500, 50, 50, 50, "down", game));
     }
     
-    public void terrain1(){
+    public void terrain1() {
         // Hole and 2 bases
-        for(int x = 50; x <= 600; x += 50){  // Ceiling
+        for(int x = 50; x <= 600; x += 50) {  // Ceiling
             game.gameTerrain.add(new Terrain(x, 0, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Right outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Right outer wall
             game.gameTerrain.add(new Terrain(600, y, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Left outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Left outer wall
             game.gameTerrain.add(new Terrain(50, y, 50, 50));
         }
-        for(int i = 0; i < 200; i += 50){   // Floor Left
+        for(int i = 0; i < 200; i += 50) {   // Floor Left
             game.gameTerrain.add(new Terrain(i, 600, 50, 50));
         }
-        for(int i = 500; i < 700; i += 50){ // Floor Right
+        for(int i = 500; i < 700; i += 50) { // Floor Right
             game.gameTerrain.add(new Terrain(i, 600, 50, 50));
         }
         
@@ -161,32 +161,32 @@ public class LevelMaker {
         game.enemyList.add(new Enemy(350, 50, 50, 50, "down", game));
     }
     
-    public void terrain2(){
+    public void terrain2() {
         // Hole with towers, right stairs
-        for(int x = 50; x <= 600; x += 50){  // Ceiling
+        for(int x = 50; x <= 600; x += 50) {  // Ceiling
             game.gameTerrain.add(new Terrain(x, 0, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Right outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Right outer wall
             game.gameTerrain.add(new Terrain(600, y, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Left outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Left outer wall
             game.gameTerrain.add(new Terrain(50, y, 50, 50));
         }
-        for(int x = 0; x < 300; x+= 50){    // Floor Left
+        for(int x = 0; x < 300; x+= 50 ){    // Floor Left
             game.gameTerrain.add(new Terrain(x, 600, 50, 50));
         }
-        for(int x = 400; x < 700; x += 50){ // Floor Right
+        for(int x = 400; x < 700; x += 50) { // Floor Right
             game.gameTerrain.add(new Terrain(x, 600, 50, 50));
         }
         
-        for(int y = 550; y > 250; y -= 50){ // Right inner wall
+        for(int y = 550; y > 250; y -= 50) { // Right inner wall
             game.gameTerrain.add(new Terrain(400, y, 50, 50));
         }
         game.gameTerrain.add(new Terrain(450, 500, 50, 50));
         game.gameTerrain.add(new Terrain(450, 300, 50, 50));
         game.gameTerrain.add(new Terrain(550, 400, 50, 50));
         
-        for(int y = 550; y > 250; y -= 50){ // Left inner wall
+        for(int y = 550; y > 250; y -= 50) { // Left inner wall
             game.gameTerrain.add(new Terrain(250, y, 50, 50));
         }
         game.gameTerrain.add(new Terrain(200, 300, 50, 50));
@@ -195,33 +195,33 @@ public class LevelMaker {
         game.enemyList.add(new Enemy(100, 150, 50, 50, "right", game));
     }
     
-    public void terrain3(){
+    public void terrain3() {
         // Stairs and 1-block fall
-        for(int x = 50; x <= 600; x += 50){  // Ceiling
+        for(int x = 50; x <= 600; x += 50) {  // Ceiling
             game.gameTerrain.add(new Terrain(x, 0, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Right outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Right outer wall
             game.gameTerrain.add(new Terrain(600, y, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Left outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Left outer wall
             game.gameTerrain.add(new Terrain(50, y, 50, 50));
         }
-        for(int x = 0; x < 700; x+= 50){    // Floor
+        for(int x = 0; x < 700; x+= 50) {    // Floor
             game.gameTerrain.add(new Terrain(x, 600, 50, 50));
         }
         
-        for(int y = 550; 150 < y; y -= 50){ // Left inner wall
+        for(int y = 550; 150 < y; y -= 50) { // Left inner wall
             game.gameTerrain.add(new Terrain(150, y, 50, 50));
         }
-        for(int x = 150; x < 400; x += 50){ // Inner ceiling
+        for(int x = 150; x < 400; x += 50) { // Inner ceiling
             game.gameTerrain.add(new Terrain(x, 200, 50, 50));
         }
         
         game.gameTerrain.add(new Terrain(550, 250, 50, 50));
-        for(int x = 450; x <= 550; x += 50){
+        for(int x = 450; x <= 550; x += 50) {
             game.gameTerrain.add(new Terrain(x, 350, 50, 50));
         }
-        for(int x = 300; x <= 550; x += 50){
+        for(int x = 300; x <= 550; x += 50) {
             game.gameTerrain.add(new Terrain(x, 450, 50, 50));
         }
         game.gameTerrain.add(new Terrain(200, 550, 50, 50));
@@ -230,21 +230,21 @@ public class LevelMaker {
         game.enemyList.add(new Enemy(550, 400, 50, 50, "left", game));
     }
     
-    public void terrain4(){
+    public void terrain4() {
         //Single jumping stones
-        for(int x = 50; x <= 600; x += 50){  // Ceiling
+        for(int x = 50; x <= 600; x += 50) {  // Ceiling
             game.gameTerrain.add(new Terrain(x, 0, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Right outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Right outer wall
             game.gameTerrain.add(new Terrain(600, y, 50, 50));
         }
-        for(int y = 450; 0 < y; y -= 50){   // Left outer wall
+        for(int y = 450; 0 < y; y -= 50) {   // Left outer wall
             game.gameTerrain.add(new Terrain(50, y, 50, 50));
         }
-        for(int i = 0; i <= 100; i += 50){   // Floor Left
+        for(int i = 0; i <= 100; i += 50) {   // Floor Left
             game.gameTerrain.add(new Terrain(i, 600, 50, 50));
         }
-        for(int i = 550; i <= 650; i += 50){   // Floor Right
+        for(int i = 550; i <= 650; i += 50) {   // Floor Right
             game.gameTerrain.add(new Terrain(i, 600, 50, 50));
         }
         
