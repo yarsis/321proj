@@ -35,24 +35,24 @@ public class LevelMaker {
         
         select = randomInteger(0, 4, currentTerrain, firstLevel);
         switch (select) {
-            case 101 -> {
+            case 101:
                 terrainStart();
-            }
-            case 0 -> {
+				break;
+            case 0:
                 terrain0();
-            }
-            case 1 -> {
+				break;
+            case 1:
                 terrain1();
-            }
-            case 2 -> {
+				break;
+            case 2:
                 terrain2();
-            }
-            case 3 -> {
+				break;
+            case 3:
                 terrain3();
-            }
-            case 4 -> {
+				break;
+            case 4:
                 terrain4();
-            }
+				break;
         }
         
         currentTerrain = select;
@@ -136,7 +136,7 @@ public class LevelMaker {
     }
     
     public void terrain1() {
-        // Hole and 2 bases
+        // Hole and 2 floating bases
         for(int x = 50; x <= 600; x += 50) {  // Ceiling
             game.gameTerrain.add(new Terrain(x, 0, 50, 50));
         }
@@ -162,7 +162,7 @@ public class LevelMaker {
     }
     
     public void terrain2() {
-        // Hole with towers, right stairs
+        // Hole with towers, stairs on right tower
         for(int x = 50; x <= 600; x += 50) {  // Ceiling
             game.gameTerrain.add(new Terrain(x, 0, 50, 50));
         }
@@ -250,7 +250,6 @@ public class LevelMaker {
         
         game.gameTerrain.add(new Terrain(250, 600, 50, 50));
         game.gameTerrain.add(new Terrain(450, 550, 50, 50));
-        
         
         game.enemyList.add(new Enemy(100, 450, 50, 50, "right", game));
         game.enemyList.add(new Enemy(100, 400, 50, 50, "right", game));
