@@ -18,8 +18,9 @@ public class Projectile {
     private double xspeed, yspeed;
     private final Rectangle hitBox;
     private final PlayPanel game;
+	private Color color;
     
-    public Projectile(int x, int y, int xspeed, int yspeed, PlayPanel game) {
+    public Projectile(int x, int y, int xspeed, int yspeed, PlayPanel game, Color newColor) {
         this.game = game;
         this.x = x;
         this.y = y;
@@ -27,6 +28,7 @@ public class Projectile {
         this.yspeed = yspeed;
         height = 10;
         width = 10;
+		this.color = newColor;
         
         hitBox = new Rectangle(x, y, width, height);
     }
@@ -74,12 +76,12 @@ public class Projectile {
     
     public void drawProj(Graphics2D gtd) {
         /**
-        * Function will draw the player at its location.
+        * Function will draw the projectile.
         * @param gtd        Display area for the game.
         * @precondition     Display area exists.
-        * @postcondition    Player has been drawn.
+        * @postcondition    Projectile has been drawn.
         */
-        gtd.setColor(Color.RED);
+        gtd.setColor(color);
         gtd.fillRect(x, y, width, height);
     }
     
