@@ -32,6 +32,11 @@ public class Projectile {
     }
     
     public void activate() {
+        /**
+        * Function will move projectile according to its xspeed and yspeed parameters.
+        * @precondition		Projectile has been initialized.
+        * @postcondition	Projectile has moved.	
+        */
         x += xspeed;
         y += yspeed;
         hitBox.x = x;
