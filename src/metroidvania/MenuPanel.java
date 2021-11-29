@@ -123,7 +123,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
         * buttons.
         * @param g          I don't know.
         * @precondition     Game area exists.
-        * @postcondition    Pause menu is drawn.
+        * @postcondition    Game over menu is drawn.
         */
         super.paint(g); //prevent flickering
         Graphics2D gtd = (Graphics2D) g;
@@ -163,7 +163,6 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
         /**
         * Function returns the rectangle for the play button.
         * @precondition     Menu has been initialized.
-        * @postcondition    Rectangle of the play button was returned.
         * @return           The rectangle representing the play button.
         */
         return playRect;
@@ -173,7 +172,6 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
         /**
         * Function returns the rectangle for the exit button.
         * @precondition     Menu has been initialized.
-        * @postcondition    Rectangle of the exit button was returned.
         * @return           The rectangle representing the exit button.
         */
         return exitRect;
@@ -183,7 +181,6 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
         /**
         * Function returns the rectangle for the score button.
         * @precondition     Menu has been initialized.
-        * @postcondition    Rectangle of the score button was returned.
         * @return           The rectangle representing the score button.
         */
         return scoreRect;
@@ -193,7 +190,6 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
         /**
         * Function returns the rectangle for the "save score" button.
         * @precondition     Menu has been initialized.
-        * @postcondition    Rectangle of the "save score" button was returned.
         * @return           The rectangle representing the "save score" button.
         */
         return saveRect;
