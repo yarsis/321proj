@@ -114,9 +114,14 @@ public class Player {
         }
         
         // Player reached end of terrain, generate new area.
+        // Add one shot if player has none.
         if(hitBox.x <= 10 && hitBox.y == 500) {
             move(600, 500);
             game.makeTerrain();
+            
+            if(game.getScore() <= 0) {
+                game.setScore(1);
+            }
         }
         
         // Horizontal movement limiter.
@@ -175,8 +180,8 @@ public class Player {
             if(hitBox.intersects(proj.getHitBox())) {
                 game.projList.remove(i);
                 
-                if(game.points < 200) health -= 20;
-                else health -= game.points/10;
+                if(10 < game.getScore()) health -= game.getScore()/10;
+                else health -= 1;
             }
         }
         
@@ -198,6 +203,9 @@ public class Player {
         
         // Player is dead
         if (health <= 0) game.state = "dead";
+        
+        // Player healed above 100
+        if (100 <= health) this.health = 100;
     }
     
     public void move(int x, int y) {
@@ -206,7 +214,7 @@ public class Player {
         * all movement.
         * @param x          Integer of new x position.
         * @param y          Integer of new y position.
-        * @precondition     Game exists.
+        * @precondition     Game and player have been initialized.
         * @postcondition    Player has been moved.
         */
         this.x = x;
@@ -230,7 +238,6 @@ public class Player {
         /**
         * Function returns player's x position.
         * @precondition     Player class has been initialized.
-        * @postcondition    X position has been returned.
         * @return           X position.
         */
         return x;
@@ -240,7 +247,6 @@ public class Player {
         /**
         * Function returns player's y position.
         * @precondition     Player class has been initialized.
-        * @postcondition    Y position has been returned.
         * @return           Y position.
         */
         return y;
@@ -250,7 +256,6 @@ public class Player {
         /**
         * Function returns player's health.
         * @precondition     Player class has been initialized.
-        * @postcondition    Health has been returned.
         * @return           Health.
         */
         return health;
@@ -261,7 +266,7 @@ public class Player {
         * Function sets the status for left movement.
         * @param status     boolean that represents the status for movement.
         * @precondition     Player class has been initialized.
-        * @postcondition    Player starts moving left.
+        * @postcondition    Player changed its left movement condition.
         */
         this.keyLeft = status;
     }
@@ -271,7 +276,7 @@ public class Player {
         * Function sets the status for right movement.
         * @param status     boolean that represents the status for movement.
         * @precondition     Player class has been initialized.
-        * @postcondition    Player starts moving right.
+        * @postcondition    Player changed its right movement condition.
         */
         this.keyRight = status;
     }
@@ -281,7 +286,7 @@ public class Player {
         * Function sets the status for jump.
         * @param status     boolean that represents the status for movement.
         * @precondition     Player class has been initialized.
-        * @postcondition    Player starts jumping.
+        * @postcondition    Player changed its jumping condition.
         */
         this.keyUp = status;
     }
