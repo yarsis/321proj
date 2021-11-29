@@ -141,13 +141,13 @@ public class Player {
                 if("up".equals(oneEnemy.getDirection()) || "down".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getX() - width + 20) <= x && x <= (oneEnemy.getX() + oneEnemy.getWidth() - 20) && oneEnemy.getCooldown() > 100){
                         if(y > oneEnemy.getY()) {
-                            Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() + 50, 0, 4, game);
+                            Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() + 50, 0, 4, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
                         else {
-                            Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() - 50, 0, -4, game);
+                            Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() - 50, 0, -4, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
@@ -158,13 +158,13 @@ public class Player {
                 if("left".equals(oneEnemy.getDirection()) || "right".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getY() - height + 20) <= y && y <= (oneEnemy.getY() + oneEnemy.getHeight() - 20) && oneEnemy.getCooldown() > 100){
                         if(x > oneEnemy.getX()) {
-                            Projectile shot = new Projectile(oneEnemy.getX() + 50, oneEnemy.getY() + 20 , 4, 0, game);
+                            Projectile shot = new Projectile(oneEnemy.getX() + 50, oneEnemy.getY() + 20 , 4, 0, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
                         else {
-                            Projectile shot = new Projectile(oneEnemy.getX() - 12, oneEnemy.getY() + 20, -4, 0, game);
+                            Projectile shot = new Projectile(oneEnemy.getX() - 12, oneEnemy.getY() + 20, -4, 0, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
@@ -223,14 +223,14 @@ public class Player {
         yspeed = 0;
     }
     
-    public void drawPlayer(Graphics2D gtd) {
+    public void drawPlayer(Graphics2D gtd, Color color) {
         /**
         * Function will draw the player at its location.
         * @param gtd        Display area for the game.
         * @precondition     Display area exists.
         * @postcondition    Player has been drawn.
         */
-        gtd.setColor(Color.PINK);
+        gtd.setColor(color);
         gtd.fillRect(x, y, width, height);
     }
     
