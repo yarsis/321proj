@@ -24,17 +24,18 @@ import java.util.TimerTask;
 public final class PlayPanel extends javax.swing.JPanel implements ActionListener {
     Player samus;
     Timer newTimer;
+    boolean destroyedEnemy;
+    int points;
+    boolean firstLevel = true;
+    String state = "menu";
     LevelMaker makeLevel = new LevelMaker(this);
+    MenuPanel menu = new MenuPanel();
     ArrayList<Terrain> gameTerrain = new ArrayList<>();
     ArrayList<Enemy> enemyList = new ArrayList<>();
     ArrayList<Projectile> projList = new ArrayList<>();
-    boolean firstLevel = true;
-    boolean destroyedEnemy;
-    String state = "menu";
-    int points;
-    MenuPanel menu = new MenuPanel();
     
     public PlayPanel() {
+        this.points = 10;   // For starting ammo
         samus = new Player(400, 500, this); //create new player object
         
         makeTerrain();
@@ -103,16 +104,16 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
         Graphics2D gtd = (Graphics2D) g;
         
         switch (state) {
-            case "menu" -> {
+            case "menu":
                 menu.paintMain(g);
-            }
-            case "pause" -> {
+				break;
+            case "pause":
                 menu.paintPause(g);
-            }
-            case "dead" -> {
+				break;
+            case "dead":
                 menu.paintGameOver(points, g);
-            }
-            case "game" -> {
+				break;
+            case "game":
                 samus.drawPlayer(gtd);
                 
                 // Draw terrain
@@ -146,7 +147,7 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
                 g.setFont(new Font("Arial", Font.BOLD, 30));
                 gtd.drawString("Points:", temp, 35);
                 gtd.drawString(String.valueOf(points), temp + 110, 35);
-            }
+				break;
         }
     }
     
@@ -203,35 +204,59 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
         * mouse position in relation to player.
         * The shots only happen if the mouse is far enough from the player.
         * @param e          The mouse click.
-        * @precondition     Player and game exists.
-        * @postcondition    Menu was interacted OR player shot.
+        * @precondition     Player, game and menu exists.
+        * @postcondition    Menu was interacted OR player shot a projectile.
         */
         // Menu buttons
         if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "game";
         if(menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) System.exit(0);
         
-        // Player shot
-        if ("game".equals(state)) {
-            // Left
-            if(e.getPoint().x + 20 < samus.getX()) {
-                Projectile shot = new Projectile(samus.getX() - 20, samus.getY() + 20, -7, 0, this);
-                projList.add(shot);
-                shot.activate();
-            }
-            
-            // Right
-            else if(samus.getX() < e.getPoint().x - 70) {
-                Projectile shot = new Projectile(samus.getX() + 70, samus.getY() + 20, 7, 0, this);
-                projList.add(shot);
-                shot.activate();
-            }
-            
-            // Up
-            else if(e.getPoint().y < samus.getY()) {
-                Projectile shot = new Projectile(samus.getX() + 20, samus.getY() - 20, 0, -7, this);
-                projList.add(shot);
-                shot.activate();
+        // Player shot consumes a point
+        if(0 < points) {
+            if ("game".equals(state)) {
+                // Up
+                if(e.getPoint().y < samus.getY()) {
+                    Projectile shot = new Projectile(samus.getX() + 20, samus.getY() - 20, 0, -7, this);
+                    projList.add(shot);
+                    shot.activate();
+                    this.points -= 1;
+                }
+
+                // Left
+                else if(e.getPoint().x + 20 < samus.getX()) {
+                    Projectile shot = new Projectile(samus.getX() - 20, samus.getY() + 20, -7, 0, this);
+                    projList.add(shot);
+                    shot.activate();
+                    this.points -= 1;
+                }
+
+                // Right
+                else if(samus.getX() < e.getPoint().x - 70) {
+                    Projectile shot = new Projectile(samus.getX() + 70, samus.getY() + 20, 7, 0, this);
+                    projList.add(shot);
+                    shot.activate();
+                    this.points -= 1;
+                }
             }
         }
+    }
+    
+    public int getScore() {
+        /**
+        * Function returns the score.
+        * @precondition     Game has been initialized.
+        * @return           Player score.
+        */
+        return points;
+    }
+    
+    public void setScore(int input) {
+        /**
+        * Function changes the score.
+        * @param input      The new score.
+        * @precondition     Game has been initialized.
+        * @postcondition    Score has been changed.
+        */
+        this.points = input;
     }
 }
