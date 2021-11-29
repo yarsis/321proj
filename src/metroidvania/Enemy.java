@@ -90,14 +90,14 @@ public class Enemy {
         }
     }
     
-    public void draw(Graphics2D gtd) {
+    public void draw(Graphics2D gtd, Color color) {
         /**
         * Function will draw the enemy using its data.
         * @param gtd        Display area for the game.
         * @precondition     Display area exists.
         * @postcondition    Enemy has been drawn on the screen.
         */
-        gtd.setColor(Color.ORANGE);
+        gtd.setColor(color);
         gtd.fillPolygon(shape);
         
         // Countor
