@@ -43,32 +43,50 @@ public class Enemy {
         this.game = game;
         this.destroyed = false;
         this.cooldown = 0;
-        
+		int coordinatesX[] = {0, 0, 0};
+		int coordinatesY[] = {0, 0, 0};
+		
         switch(direction) {
-            case "up" -> {
-                int coordinatesX[] = {x, x+width/2, x+width};
-                int coordinatesY[] = {y+height, y, y+height};
-                Polygon newShape = new Polygon(coordinatesX, coordinatesY, 3);
-                this.shape = newShape;
-            }
-            case "down" -> {
-                int coordinatesX[] = {x, x+width/2, x+width};
-                int coordinatesY[] = {y, y+height, y};
-                Polygon newShape = new Polygon(coordinatesX, coordinatesY, 3);
-                this.shape = newShape;
-            }
-            case "right" -> {
-                int coordinatesX[] = {x, x+width, x};
-                int coordinatesY[] = {y, y+height/2, y+height};
-                Polygon newShape = new Polygon(coordinatesX, coordinatesY, 3);
-                this.shape = newShape;
-            }
-            case "left" -> {
-                int coordinatesX[] = {x+width, x, x+width};
-                int coordinatesY[] = {y, y+height/2, y+height};
-                Polygon newShape = new Polygon(coordinatesX, coordinatesY, 3);
-                this.shape = newShape;
-            }
+            case "up":
+                coordinatesX[0] = x;
+                coordinatesX[1] = x+width/2;
+                coordinatesX[2] = x+width;
+                coordinatesY[0] = y+height;
+                coordinatesY[1] = y;
+                coordinatesY[2] = y+height;
+                Polygon newShapeUp = new Polygon(coordinatesX, coordinatesY, 3);
+                this.shape = newShapeUp;
+				break;
+            case "down":
+				coordinatesX[0] = x;
+				coordinatesX[1] = x+width/2;
+				coordinatesX[2] = x+width;
+                coordinatesY[0] = y;
+                coordinatesY[1] = y+height;
+                coordinatesY[2] = y;
+                Polygon newShapeDown = new Polygon(coordinatesX, coordinatesY, 3);
+                this.shape = newShapeDown;
+				break;
+            case "right":
+                coordinatesX[0] = x;
+                coordinatesX[1] = x+width;
+                coordinatesX[2] = x;
+                coordinatesY[0] = y;
+                coordinatesY[1] = y+height/2;
+                coordinatesY[2] = y+height;
+                Polygon newShapeRight = new Polygon(coordinatesX, coordinatesY, 3);
+                this.shape = newShapeRight;
+				break;
+            case "left":
+                coordinatesX[0] = x+width;
+                coordinatesX[1] = x;
+                coordinatesX[2] = x+width;
+                coordinatesY[0] = y;
+                coordinatesY[1] = y+height/2;
+                coordinatesY[2] = y+height;
+                Polygon newShapeLeft = new Polygon(coordinatesX, coordinatesY, 3);
+                this.shape = newShapeLeft;
+				break;
         }
     }
     
@@ -134,7 +152,6 @@ public class Enemy {
         /**
         * Function returns true if the enemy has been destroyed.
         * @precondition     Enemy has been initialized.
-        * @postcondition    Destroyed status has been returned.
         * @return           True if enemy is destroyed.
         */
         return destroyed;
@@ -142,9 +159,8 @@ public class Enemy {
     
     public int getX() {
         /**
-        * Function returns enemy's x position.
+        * Function returns enemy's top right corner x position.
         * @precondition     Enemy has been initialized.
-        * @postcondition    X position has been returned.
         * @return           X position.
         */
         return x;
@@ -152,9 +168,8 @@ public class Enemy {
     
     public int getY() {
         /**
-        * Function returns enemy's y position.
+        * Function returns enemy's top right corner y position.
         * @precondition     Enemy has been initialized.
-        * @postcondition    Y position has been returned.
         * @return           Y position.
         */
         return y;
@@ -164,7 +179,6 @@ public class Enemy {
         /**
         * Function returns enemy's direction.
         * @precondition     Enemy has been initialized.
-        * @postcondition    Direction has been returned.
         * @return           String that represents direction.
         */
         return direction;
@@ -174,7 +188,6 @@ public class Enemy {
         /**
         * Function returns enemy's width.
         * @precondition     Enemy has been initialized.
-        * @postcondition    Width has been returned.
         * @return           Enemy width.
         */
         return width;
@@ -184,7 +197,6 @@ public class Enemy {
         /**
         * Function returns enemy's height.
         * @precondition     Enemy has been initialized.
-        * @postcondition    Height has been returned.
         * @return           Enemy height.
         */
         return height;
@@ -192,10 +204,9 @@ public class Enemy {
     
     public Polygon getShape() {
         /**
-        * Function returns enemy's shape.
+        * Function returns enemy's Polygon.
         * @precondition     Enemy has been initialized.
-        * @postcondition    Shape has been returned.
-        * @return           Enemy shape.
+        * @return           Enemy Polygon.
         */
         return shape;
     }
