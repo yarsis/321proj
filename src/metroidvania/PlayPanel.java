@@ -28,8 +28,10 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
     int points;
     boolean firstLevel = true;
     String state = "menu";
+	Color playerColor = Color.PINK;
+	Color enemyColor = Color.ORANGE;
     LevelMaker makeLevel = new LevelMaker(this);
-    MenuPanel menu = new MenuPanel();
+    MenuPanel menu = new MenuPanel(this);
     ArrayList<Terrain> gameTerrain = new ArrayList<>();
     ArrayList<Enemy> enemyList = new ArrayList<>();
     ArrayList<Projectile> projList = new ArrayList<>();
@@ -45,7 +47,7 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
             @Override
             public void run() {
                 // Move player if game is not paused
-                if(!"pause".equals(state)) {
+                if("game".equals(state)) {
                     samus.set();
                 }
                 repaint();
@@ -53,7 +55,7 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
                 // Draw each projectile, and move them if game is not paused
                 for(int i = 0; i < projList.size(); i++) {
                     Projectile proj = projList.get(i);
-                    if(!"pause".equals(state)) {
+                    if("game".equals(state)) {
                         proj.activate();
                     }
                     if(proj.getXSpeed() == 0 && proj.getYSpeed() == 0) {
@@ -93,7 +95,7 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
     @Override
     public void paint(Graphics g) {
         /**
-        * Function will draw the play area depending on the game state.
+        * Function will draw the game depending on its state.
         * @param g          I don't know.
         * @precondition     Terrain, player, enemies and projectiles, or menu, 
         * have been initialized.
@@ -113,8 +115,11 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
             case "dead":
                 menu.paintGameOver(points, g);
 				break;
+            case "settings":
+                menu.paintSettings(g);
+				break;
             case "game":
-                samus.drawPlayer(gtd);
+                samus.drawPlayer(gtd, playerColor);
                 
                 // Draw terrain
                 for(int i = 0; i < gameTerrain.size(); i++) {
@@ -125,7 +130,7 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
                 // Draw enemies
                 for(int i = 0; i < enemyList.size(); i++) {
                     Enemy oneEnemy = enemyList.get(i);
-                    oneEnemy.draw(gtd);
+                    oneEnemy.draw(gtd, enemyColor);
                 }
                 
                 // Draw projectiles
@@ -136,14 +141,14 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
                 
                 // Draw health
                 temp = 27;
-                gtd.setColor(Color.PINK);
+                gtd.setColor(playerColor);
                 g.setFont(new Font("Arial", Font.BOLD, 30));
                 gtd.drawString("Health:", temp, 35);
                 gtd.drawString(String.valueOf(samus.getHealth()), temp + 110, 35);
                 
                 // Draw points
                 temp = 487;
-                gtd.setColor(Color.ORANGE);
+                gtd.setColor(enemyColor);
                 g.setFont(new Font("Arial", Font.BOLD, 30));
                 gtd.drawString("Points:", temp, 35);
                 gtd.drawString(String.valueOf(points), temp + 110, 35);
@@ -209,14 +214,18 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
         */
         // Menu buttons
         if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "game";
+        if(menu.getColorsRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "settings";
+        if(menu.getColorsPlayerRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setPlayerColor(randomizeColor());
+        if(menu.getColorsBackRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setBackgroundColor(randomizeColor());
+        if(menu.getColorsEnemyRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setEnemyColor(randomizeColor());
         if(menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) System.exit(0);
         
-        // Player shot consumes a point
+        // Player shot and consumed a point
         if(0 < points) {
             if ("game".equals(state)) {
                 // Up
                 if(e.getPoint().y < samus.getY()) {
-                    Projectile shot = new Projectile(samus.getX() + 20, samus.getY() - 20, 0, -7, this);
+                    Projectile shot = new Projectile(samus.getX() + 20, samus.getY() - 20, 0, -7, this, playerColor);
                     projList.add(shot);
                     shot.activate();
                     this.points -= 1;
@@ -224,7 +233,7 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
 
                 // Left
                 else if(e.getPoint().x + 20 < samus.getX()) {
-                    Projectile shot = new Projectile(samus.getX() - 20, samus.getY() + 20, -7, 0, this);
+                    Projectile shot = new Projectile(samus.getX() - 20, samus.getY() + 20, -7, 0, this, playerColor);
                     projList.add(shot);
                     shot.activate();
                     this.points -= 1;
@@ -232,7 +241,7 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
 
                 // Right
                 else if(samus.getX() < e.getPoint().x - 70) {
-                    Projectile shot = new Projectile(samus.getX() + 70, samus.getY() + 20, 7, 0, this);
+                    Projectile shot = new Projectile(samus.getX() + 70, samus.getY() + 20, 7, 0, this, playerColor);
                     projList.add(shot);
                     shot.activate();
                     this.points -= 1;
@@ -240,6 +249,18 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
             }
         }
     }
+	
+	private Color randomizeColor() {
+        /**
+        * Function creates a random Color.
+		* @return			A random Color.
+        */
+		int red = (int)(Math.random() * 255);
+		int green = (int)(Math.random() * 255);
+		int blue = (int)(Math.random() * 255);
+		
+		return new Color(red, green, blue);
+	}
     
     public int getScore() {
         /**
@@ -258,5 +279,62 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
         * @postcondition    Score has been changed.
         */
         this.points = input;
+    }
+    
+    public void setPlayerColor(Color color) {
+        /**
+        * Function changes the player color.
+        * @param color      The new color.
+        * @precondition     Game has been initialized.
+        * @postcondition    Player color has been changed.
+        */
+        this.playerColor = color;
+    }
+    
+    public void setBackgroundColor(Color color) {
+        /**
+        * Function changes the background color.
+        * @param color      The new color.
+        * @precondition     Game has been initialized.
+        * @postcondition    Background color has been changed.
+        */
+        this.setBackground(color);
+    }
+    
+    public void setEnemyColor(Color color) {
+        /**
+        * Function changes the enemy's color.
+        * @param color      The new color.
+        * @precondition     Game has been initialized.
+        * @postcondition    Enemy's color has been changed.
+        */
+        this.enemyColor = color;
+    }
+    
+    public Color getPlayerColor() {
+        /**
+        * Function returns the player color.
+        * @precondition     Game has been initialized.
+		* @return			Player color.
+        */
+        return playerColor;
+    }
+    
+    public Color getBackgroundColor() {
+        /**
+        * Function returns the background color.
+        * @precondition     Game has been initialized.
+		* @return			Background color.
+        */
+        return this.getBackground();
+    }
+    
+    public Color getEnemyColor() {
+        /**
+        * Function returns the enemy's color.
+        * @precondition     Game has been initialized.
+		* @return			Enemy's color.
+        */
+        return enemyColor;
     }
 }
