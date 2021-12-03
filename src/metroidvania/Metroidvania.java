@@ -10,13 +10,20 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
  * This program is a Metroidvania game, which is a 2D sidescrolling platformer
- * with different randomly generated levels, attacking enemies,
+ * with different randomly generated levels, attacking enemies, and a running score.
+ * The player accumulates points, which are spent as ammo to shoot enemies while
+ * navigating the levels. Enemies target the player, and are destroyed after being
+ * hit by the player. The player loses when their health reaches 0 or they fall
+ * out of the level. The game keeps the score and can save the player's name
+ * and high score after the game is lost.
+ * 
  * @author caden
  */
 public class Metroidvania {
 
     /**
-     * Main exercise class of the program, creates the main window for the program.
+     * Main exercise class of the program, creates the main window for the program
+     * and starts the game from the main menu.
      * 
      * @param args the command line arguments
      */
