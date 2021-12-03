@@ -26,10 +26,12 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
     Timer newTimer;
     boolean destroyedEnemy;
     int points;
+	
     boolean firstLevel = true;
     String state = "menu";
 	Color playerColor = Color.PINK;
 	Color enemyColor = Color.ORANGE;
+	
     LevelMaker makeLevel = new LevelMaker(this);
     MenuPanel menu = new MenuPanel(this);
     ArrayList<Terrain> gameTerrain = new ArrayList<>();
