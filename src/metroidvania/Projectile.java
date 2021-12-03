@@ -21,7 +21,7 @@ public class Projectile {
     private double xspeed, yspeed; // Double values for movement speed.
     private final Rectangle hitBox; // Rectangle for the projectile's hitbox.
     private final PlayPanel game; // PlayPanel of the game using the projectile.
-    private Color color; // Color of the projectile.
+    private final Color color; // Color of the projectile.
     
      /**
       * Construct a Projectile object in the game with an xy position, movement
