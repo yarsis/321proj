@@ -16,12 +16,12 @@ import java.awt.Rectangle;
  * @author caden, Henry Schulz
  */
 public class Projectile {
-    private int x,y;
-    private final int width, height;
-    private double xspeed, yspeed;
-    private final Rectangle hitBox;
-    private final PlayPanel game;
-    private final Color color;
+    private int x,y; // Integers for the projectile's position on the xy axis
+    private final int width, height; // Integers for the height and width of the projectile.
+    private double xspeed, yspeed; // Double values for movement speed.
+    private final Rectangle hitBox; // Rectangle for the projectile's hitbox.
+    private final PlayPanel game; // PlayPanel of the game using the projectile.
+    private Color color; // Color of the projectile.
     
      /**
       * Construct a Projectile object in the game with an xy position, movement
@@ -36,6 +36,7 @@ public class Projectile {
       * @param newColor Color of the projectile.
       */
     public Projectile(int x, int y, int xspeed, int yspeed, PlayPanel game, Color newColor) {
+	// Set attributes according to parameters and defaults.
         this.game = game;
         this.x = x;
         this.y = y;
@@ -44,7 +45,8 @@ public class Projectile {
         height = 10;
         width = 10;
 		this.color = newColor;
-        
+	    
+       // Generate a rectangular hitbox for the projectile. 
         hitBox = new Rectangle(x, y, width, height);
     }
     
@@ -56,11 +58,13 @@ public class Projectile {
      * @postcondition	        Projectile has moved.	
      */
     public void activate() {
+	// Update the projectile's position and hitbox.
         x += xspeed;
         y += yspeed;
         hitBox.x = x;
         hitBox.y = y;
         
+	// Horizontal collision detection, uses the same method as the player object.
         hitBox.x += xspeed;
         for(int i = 0; i < game.gameTerrain.size(); i++) {
             Terrain ter = game.gameTerrain.get(i);
@@ -75,6 +79,7 @@ public class Projectile {
             }
         }
         
+	//Vertical collision detection, same as player's collision detection.
         hitBox.y += yspeed;
         for(int i = 0; i < game.gameTerrain.size(); i++) {
 			Terrain ter = game.gameTerrain.get(i);
@@ -98,6 +103,7 @@ public class Projectile {
      * @postcondition    Projectile has been drawn.
      */
     public void drawProj(Graphics2D gtd) {
+	// Make a projectile rectangle in the specified color.
         gtd.setColor(color);
         gtd.fillRect(x, y, width, height);
     }
