@@ -101,7 +101,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
      * 
      * precondition     Game area exists.
      * postcondition    Pause menu is drawn.
-     * @param g          Graphics object used to generate visuals.
+     * @param g			Graphics object used to generate visuals.
 
      */
     public void paintPause(Graphics g) {
