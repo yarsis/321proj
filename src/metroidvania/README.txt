@@ -45,20 +45,19 @@ carefully to avoid getting hit with enemy projectiles. Falling out of the map wi
 
 GAME OVER
 ++++++++++++++++
-Upon reaching 0 health or falling out of the map, the game over screen is presented where the player can either quit the game or save their high score.
+Upon reaching 0 health or falling out of the map, the game over screen is presented.
 
 			    FEATURES
 =================================================================
 
 SCOREBOARD
 ++++++++++++++++
-
+The scoreboard is currently under development. 
 
 COLOR CHANGE
 ++++++++++++++++
 After pressing escape to enter the pause menu, the player has the option to enter the "change colors" panel. From here, the user can cycle through background, enemy, 
 and their own color in game. Press escape to return from this menu back to the game to see your new colors in action!
-
 
 
 *****************************************************************
