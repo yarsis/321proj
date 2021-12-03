@@ -35,7 +35,10 @@ public class Player {
      * @param game PlayPanel for the game Player object is used in.
      */
     public Player(int x, int y, PlayPanel game) {
-        this.game = game;
+        this.game = game; //Sets game as the PlayPanel object passed into player object.
+        
+        // Set x and y coordinates according to the parameters and other attributes
+        // to default values.
         this.x = x;
         this.y = y;
         width = 50;
@@ -153,17 +156,19 @@ public class Player {
         for(int i = 0; i < game.enemyList.size(); i++) {
             Enemy oneEnemy = game.enemyList.get(i);
             
-            // If enemy is facing up or down, projectile is shot on a 
-			//horizontal axis.
+            // If the enemy has not been destroyed, shoot a projectile and restart its cooldown.
             if(!oneEnemy.isDestroyed()) {
+		// If enemy is facing up or down, projectile is shot on a vertical axis.
                 if("up".equals(oneEnemy.getDirection()) || "down".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getX() - width + 20) <= x && x <= (oneEnemy.getX() + oneEnemy.getWidth() - 20) && oneEnemy.getCooldown() > 100) {
+			// Shoot a projectile up at the player if they are above the enemy.
                         if(y > oneEnemy.getY()) {
                             Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() + 50, 0, 4, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
+			// Otherwise, shoot a projectile down at the player.
                         else {
                             Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() - 50, 0, -4, game, Color.RED);
                             game.projList.add(shot);
@@ -173,16 +178,17 @@ public class Player {
                     }
                 }
 
-                // If enemy is facing left or right, projectile is shot on a 
-				//horizontal axis.
+                // If enemy is facing left or right, projectile is shot on a horizontal axis.
                 if("left".equals(oneEnemy.getDirection()) || "right".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getY() - height + 20) <= y && y <= (oneEnemy.getY() + oneEnemy.getHeight() - 20) && oneEnemy.getCooldown() > 100) {
+			// Shoot a projectile right at the player if they are to the enemy's right.
                         if(x > oneEnemy.getX()) {
                             Projectile shot = new Projectile(oneEnemy.getX() + 50, oneEnemy.getY() + 20 , 4, 0, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
+			// Otherwise, shoot a projectile left at the player.
                         else {
                             Projectile shot = new Projectile(oneEnemy.getX() - 12, oneEnemy.getY() + 20, -4, 0, game, Color.RED);
                             game.projList.add(shot);
@@ -195,29 +201,30 @@ public class Player {
         }
         
         // If the player touched projectile, damage player according to score.
-		//If points are not high enough, damage player by 1.
         for(int i = 0; i < game.projList.size(); i++) {
             Projectile proj = game.projList.get(i);
 			
             if(hitBox.intersects(proj.getHitBox())) {
-                game.projList.remove(i);
+                game.projList.remove(i); // Remove the projectile.
                 
                 if(10 < game.getScore()) health -= game.getScore()/10;
 				
-                else health -= 1;
+                else health -= 1; // If player's health is lower than 10, decrement health by 1 instead.
             }
         }
         
         // If the player touches an enemy, destroy the enemy, damage player and 
 		//propulse player depending on relative position to enemy.
         for(int i = 0; i < game.enemyList.size(); i++) {
-            Enemy oneEnemy = game.enemyList.get(i);
-			
+            Enemy oneEnemy = game.enemyList.get(i); // Set the enemy that has been hit.
+		
+	    // If the enemy has not been destroyed, halve player's health and destroy the enemy.	
             if(!oneEnemy.isDestroyed()) {
                 if(oneEnemy.getShape().intersects(hitBox)) {
                     health = health/2;
                     oneEnemy.destroy();
-					
+		    
+		    // Propulse player appropriate to the enemy's position.
                     if(x < oneEnemy.getX()) xspeed = -7;
 					
                     else xspeed = 7;
@@ -242,6 +249,7 @@ public class Player {
      * @postcondition    Player has been moved.
      */
     public void move(int x, int y) {
+	// Set player position to coordinates given in the parameter, stop movement.
         this.x = x;
         this.y = y;
         xspeed = 0;
@@ -257,6 +265,7 @@ public class Player {
      * @postcondition    Player has been drawn.
      */
     public void drawPlayer(Graphics2D gtd, Color color) {
+	// Color the player rectangle the specified color.
         gtd.setColor(color);
         gtd.fillRect(x, y, width, height);
     }
