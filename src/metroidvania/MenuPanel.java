@@ -19,23 +19,33 @@ import java.util.TimerTask;
  * @author caden, Henry Schulz
  */
 public class MenuPanel extends javax.swing.JPanel implements ActionListener {
-    private final Timer newTimer;
-    private Rectangle playRect;
-    private Rectangle scoreRect;
-    private Rectangle saveRect;
-    private Rectangle exitRect;
+    private final Timer newTimer; // Declare a timer for the menu to use.
+    private Rectangle playRect; // Rectangle for the play button.
+    private Rectangle scoreRect; // Rectangle for the score button.
+    private Rectangle saveRect; // Rectangle for the save button.
+    private Rectangle exitRect; // Rectangle for the exit button.
     private Rectangle colorsRect;
     private Rectangle colorsPlayerRect;
     private Rectangle colorsBackRect;
     private Rectangle colorsEnemyRect;
-	private PlayPanel game;
-	private boolean settingsAccessed = false;
+    private PlayPanel game; // PlayPanel representing the game.
+    private boolean settingsAccessed = false;
     
+    /**
+     * Constructs a menu for the game that will refresh itself according to the
+     * timer.
+     * 
+     * @param game PlayPanel for the game the menu is displayed in.
+     */
     public MenuPanel(PlayPanel game) {
-		this.game = game;
+	this.game = game; // Set the game the menus are made for as the game 
+                          // passed in the parameter.
 		
-        newTimer = new Timer();
-        newTimer.schedule(new TimerTask() {
+        newTimer = new Timer(); // Create a timer to use to refresh the menu.
+        
+        // Schedule a refresh rate for the menu that redraws the menu at a
+        // fixed rate by overriding the TimerTask run method.
+        newTimer.schedule(new TimerTask() { 
             @Override
             public void run() {
                 repaint();
@@ -43,14 +53,16 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
         }, 0, 16);
     }
     
+    /**
+     * Function draws the main menu with "play", "scores" and "exit" buttons.
+     * 
+     * @param g          I don't know.
+     * @precondition     Game area exists.
+     * @postcondition    Main menu is drawn.
+     */
     public void paintMain(Graphics g) {
-        /**
-        * Function draw the main menu with "play", "scores" and "exit" buttons.
-        * @param g          I don't know.
-        * @precondition     Game area exists.
-        * @postcondition    Main menu is drawn.
-        */
-        super.paint(g); //prevent flickering
+        
+        super.paint(g); //Prevent flickering
         Graphics2D gtd = (Graphics2D) g;
         
         playRect = new Rectangle(275, 280, 150, 50);
@@ -79,7 +91,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
     public void paintPause(Graphics g) {
         /**
         * Function will remove previous buttons and draw a pause menu with 
-		* "change colors", "continue" and "exit" buttons.
+	* "change colors", "continue" and "exit" buttons.
         * @param g          I don't know.
         * @precondition     Game area exists.
         * @postcondition    Pause menu is drawn.
@@ -121,30 +133,30 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
     public void paintSettings(Graphics g) {
         /**
         * Function will remove previous buttons and draw a settings menu with 
-		* "player color", "background color" and "enemy color" buttons with 
-		* their respective colors.
+	* "player color", "background color" and "enemy color" buttons with 
+	* their respective colors.
         * @param g          I don't know.
         * @precondition     Game area exists.
         * @postcondition    Settings menu is drawn.
         */
         super.paint(g); //prevent flickering
         Graphics2D gtd = (Graphics2D) g;
-		settingsAccessed = true;
+	settingsAccessed = true;
 		
-		playRect.setSize(0, 0);
-		scoreRect.setSize(0, 0);
-		exitRect.setSize(0, 0);
-		colorsRect.setSize(0, 0);
+	playRect.setSize(0, 0);
+	scoreRect.setSize(0, 0);
+	exitRect.setSize(0, 0);
+	colorsRect.setSize(0, 0);
         
-		colorsPlayerRect = new Rectangle(275, 280, 150, 50);
+	colorsPlayerRect = new Rectangle(275, 280, 150, 50);
         colorsBackRect = new Rectangle(275, 340, 150, 50);
         colorsEnemyRect = new Rectangle(275, 400, 150, 50);
         
-		gtd.drawRect(275, 280, 150, 50);
+	gtd.drawRect(275, 280, 150, 50);
         gtd.drawRect(275, 340, 150, 50);
         gtd.drawRect(275, 400, 150, 50);
         gtd.setColor(Color.WHITE);
-		gtd.fillRect(276, 281, 149, 49);
+	gtd.fillRect(276, 281, 149, 49);
         gtd.fillRect(276, 341, 149, 49);
         gtd.fillRect(276, 401, 149, 49);
         
@@ -154,7 +166,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
         
         gtd.setColor(game.getPlayerColor());
         g.setFont(new Font("Ariel", Font.PLAIN, 12));
-		gtd.drawString("PLAYER COLOR", 305, 310);
+	gtd.drawString("PLAYER COLOR", 305, 310);
         gtd.setColor(game.getBackgroundColor());
         gtd.drawString("BACKGROUND COLOR", 285, 370);
         gtd.setColor(game.getEnemyColor());
@@ -164,9 +176,9 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
     public String switchPauseState(String state) {
         /**
         * Function will change the game state to pause. If the game is in any 
-		* other state, return to game state.
+	* other state, return to game state.
         * @param state      String that represents the current state of the 
-		* game.
+	*                   game.
         * @postcondition    Game state was changed.
         * @return           String representing new game state.
         */
@@ -180,7 +192,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
     public void paintGameOver(int points, Graphics g) {
         /**
         * Function will remove previous buttons and draw a game over menu with 
-		* "save score" and "exit" buttons.
+	* "save score" and "exit" buttons.
         * @param g          I don't know.
         * @precondition     Game area exists.
         * @postcondition    Game over menu is drawn.
@@ -189,12 +201,12 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
         Graphics2D gtd = (Graphics2D) g;
         int xPosition;
 		
-		if(settingsAccessed) {
-		colorsRect.setSize(0, 0);
-		colorsPlayerRect.setSize(0, 0);
-		colorsBackRect.setSize(0, 0);
-		colorsEnemyRect.setSize(0, 0);
-		}
+	if(settingsAccessed) {
+            colorsRect.setSize(0, 0);
+            colorsPlayerRect.setSize(0, 0);
+            colorsBackRect.setSize(0, 0);
+            colorsEnemyRect.setSize(0, 0);
+	}
         
         saveRect = new Rectangle(275, 340, 150, 50);
         exitRect = new Rectangle(275, 400, 150, 50);
@@ -265,11 +277,11 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
     public Rectangle getColorsRect() {
         /**
         * Function tries to return the rectangle for the "change colors" button.
-		* If the button has not been created and it has been somehow clicked, 
-		* return exitRect to close the program.
+	* If the button has not been created and it has been somehow clicked, 
+	* return exitRect to close the program.
         * @precondition     Menu has been initialized.
         * @return           The rectangle representing the "change colors".
-		* button.
+	* button.
         */
 		if(colorsRect == null) return exitRect;
 		
@@ -279,13 +291,13 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
     public Rectangle getColorsPlayerRect() {
         /**
         * Function tries to return the rectangle for the "player color" button.
-		* If the button has not been created and it has been somehow clicked, 
-		* return exitRect to close the program.
+	* If the button has not been created and it has been somehow clicked, 
+	* return exitRect to close the program.
         * @precondition     Menu has been initialized.
         * @return           The rectangle representing the "player color".
-		* button.
+	* button.
         */
-		if(colorsPlayerRect == null) return exitRect;
+	if(colorsPlayerRect == null) return exitRect;
 		
         return colorsPlayerRect;
     }
@@ -293,12 +305,12 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
     public Rectangle getColorsBackRect() {
         /**
         * Function tries to return the rectangle for the "background color" 
-		* button.
-		* If the button has not been created and it has been somehow clicked, 
-		* return exitRect to close the program.
+	* button.
+	* If the button has not been created and it has been somehow clicked, 
+	* return exitRect to close the program.
         * @precondition     Menu has been initialized.
         * @return           The rectangle representing the "background color".
-		* button.
+	* button.
         */
 		if(colorsBackRect == null) return exitRect;
 		
@@ -308,13 +320,13 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
     public Rectangle getColorsEnemyRect() {
         /**
         * Function tries to return the rectangle for the "enemy color" button.
-		* If the button has not been created and it has been somehow clicked, 
-		* return exitRect to close the program.
+	* If the button has not been created and it has been somehow clicked, 
+	* return exitRect to close the program.
         * @precondition     Menu has been initialized.
         * @return           The rectangle representing the "enemy color".
-		* button.
+	* button.
         */
-		if(colorsEnemyRect == null) return exitRect;
+	if(colorsEnemyRect == null) return exitRect;
 		
         return colorsEnemyRect;
     }
