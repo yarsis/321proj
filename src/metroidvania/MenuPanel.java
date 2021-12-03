@@ -197,9 +197,8 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
      * Function will change the game state to pause. If the game is in any 
      * other state, return to game state.
      * 
-     * @param state      String that represents the current state of the 
-     *                   game.
-     * @postcondition    Game state was changed.
+     * @param state      String that represents the current state of the game.
+     * @postcondition    If applicable, game state was changed.
      * @return           String representing new game state.
      */
     public String switchPauseState(String state) {
@@ -320,8 +319,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
      * return exitRect to close the program.
      * 
      * @precondition     Menu has been initialized.
-     * @return           The rectangle representing the "change colors".
-     *                   button.
+     * @return           The rectangle representing the "change colors" button.
      */
     public Rectangle getColorsRect() {
 		// No colors button has been generated, return the exit button.
@@ -336,8 +334,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
      * return exitRect to close the program.
      * 
      * @precondition     Menu has been initialized.
-     * @return           The rectangle representing the "player color".
-     *                   button.
+     * @return           The rectangle representing the "player color" button.
      */
     public Rectangle getColorsPlayerRect() {
 		// No player color button has been generated, return the exit button.
@@ -353,8 +350,8 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
      * return exitRect to close the program.
      * 
      * @precondition     Menu has been initialized.
-     * @return           The rectangle representing the "background color".
-     *                   button.
+     * @return           The rectangle representing the "background color" 
+	 * button.
      */
     public Rectangle getColorsBackRect() {
 		// No background color button has been generated, return the exit button.
@@ -369,8 +366,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
      * return exitRect to close the program.
      * 
      * @precondition     Menu has been initialized.
-     * @return           The rectangle representing the "enemy color".
-     *                   button.
+     * @return           The rectangle representing the "enemy color" button.
      */
     public Rectangle getColorsEnemyRect() {
 		// No enemy color button has been generated, return the exit button.
