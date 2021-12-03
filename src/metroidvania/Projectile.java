@@ -28,15 +28,15 @@ public class Projectile {
       * speed, and color specified by parameters. Other attributes are set to
       * defaults and a hitbox is generated with the attributes.
       * 
-      * @param x Projectile's initial x coordinate.
-      * @param y Projectile's initial y coordinate.
-      * @param xspeed Projectile's initial horizontal speed.
-      * @param yspeed Projectile's initial vertical speed.
-      * @param game PlayPanel game using the projectile.
-      * @param newColor Color of the projectile.
+      * @param x		Projectile's initial x coordinate.
+      * @param y		Projectile's initial y coordinate.
+      * @param xspeed	Projectile's initial horizontal speed.
+      * @param yspeed	Projectile's initial vertical speed.
+      * @param game		PlayPanel game using the projectile.
+      * @param newColor	Color of the projectile.
       */
     public Projectile(int x, int y, int xspeed, int yspeed, PlayPanel game, Color newColor) {
-	// Set attributes according to parameters and defaults.
+		// Set attributes according to parameters and defaults.
         this.game = game;
         this.x = x;
         this.y = y;
@@ -55,7 +55,7 @@ public class Projectile {
 	 * parameters.
      * 
      * @precondition		Projectile has been initialized.
-     * @postcondition	        Projectile has moved.	
+     * @postcondition		Projectile has moved.	
      */
     public void activate() {
 	// Update the projectile's position and hitbox.
@@ -112,7 +112,6 @@ public class Projectile {
      * Function returns the hit box for the projectile.
      * 
      * @precondition     Projectile has been initialized.
-     * @postcondition    Hit box has been returned.
      * @return           Projectile's hit box.
      */
     public Rectangle getHitBox() {
@@ -123,7 +122,6 @@ public class Projectile {
      * Function returns projectile's width.
      * 
      * @precondition     Projectile has been initialized.
-     * @postcondition    Width has been returned.
      * @return           Projectile width.
      */
     public int getWidth() {
@@ -134,7 +132,6 @@ public class Projectile {
      * Function returns projectile's height.
      * 
      * @precondition     Projectile has been initialized.
-     * @postcondition    Height has been returned.
      * @return           Projectile height.
      */
     public int getHeight() {
@@ -145,7 +142,6 @@ public class Projectile {
      * Function returns projectile's x speed.
      * 
      * @precondition     Projectile has been initialized.
-     * @postcondition    X speed has been returned.
      * @return           Projectile x speed.
      */
     public double getXSpeed() {
@@ -156,7 +152,6 @@ public class Projectile {
      * Function returns projectile's y speed.
      * 
      * @precondition     Projectile has been initialized.
-     * @postcondition    Y speed has been returned.
      * @return           Projectile y speed.
      */
     public double getYSpeed() {
