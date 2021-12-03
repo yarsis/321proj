@@ -213,12 +213,12 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
         * @postcondition    Menu was interacted OR player shot a projectile.
         */
         // Menu buttons
-        if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "game";
+        if(!"game".equals(state) && menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "game";
+        if(!"game".equals(state) && menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) System.exit(0);
         if("pause".equals(state) && menu.getColorsRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "settings";
         if("settings".equals(state) && menu.getColorsPlayerRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setPlayerColor(randomizeColor());
         if("settings".equals(state) && menu.getColorsBackRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27)))  setBackgroundColor(randomizeColor());
         if("settings".equals(state) && menu.getColorsEnemyRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setEnemyColor(randomizeColor());
-        if(!"game".equals(state) && menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) System.exit(0);
         
         // Player shot and consumed a point
         if(0 < points) {
