@@ -39,42 +39,40 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
     public PlayPanel() {
         this.points = 10;   // For starting ammo
         samus = new Player(400, 500, this); //create new player object
+        newTimer = new Timer();
         
         makeTerrain();
-    
-        newTimer = new Timer();
+		
         newTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 // Move player if game is not paused
-                if("game".equals(state)) {
-                    samus.set();
-                }
+                if("game".equals(state)) samus.set();
+				
                 repaint();
                 
                 // Draw each projectile, and move them if game is not paused
                 for(int i = 0; i < projList.size(); i++) {
                     Projectile proj = projList.get(i);
-                    if("game".equals(state)) {
-                        proj.activate();
-                    }
-                    if(proj.getXSpeed() == 0 && proj.getYSpeed() == 0) {
-                        projList.remove(i);
-                    }
+					
+                    if("game".equals(state)) proj.activate();
+					
+                    if(proj.getXSpeed() == 0 && proj.getYSpeed() == 0) projList.remove(i);
                 }
-                
+				
                 // Draw each enemy and check if one was destoyed
-               for(int i = 0; i < enemyList.size(); i++) {
-                    Enemy oneEnemy = enemyList.get(i);
+                for(int i = 0; i < enemyList.size(); i++) {
+					Enemy oneEnemy = enemyList.get(i);
                     oneEnemy.increaseCooldown();
+					
                     if(oneEnemy.checkShotAt()) destroyedEnemy = true;
-               }
+                }
                
-               // Add points if an enemy is shot at
-               if(destroyedEnemy) {
-                   points += 10;
-                   destroyedEnemy = false;
-               }
+                // Add points if an enemy is shot at
+                if(destroyedEnemy) {
+					points += 10;
+					destroyedEnemy = false;
+                }
             }
         }, 0, 16);
     }
@@ -214,36 +212,11 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
         */
         // Menu buttons
         if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "game";
-        if(menu.getColorsRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27)))
-        {
-            if ("pause".equals(state)){
-                state = "settings";
-            }
-        }
-        if(menu.getColorsPlayerRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27)))
-        {
-            if("settings".equals(state)){
-               setPlayerColor(randomizeColor());
-            }
-        }
-        if(menu.getColorsBackRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) 
-        {
-            if("settings".equals(state)){
-                setBackgroundColor(randomizeColor());
-            }
-        }
-        if(menu.getColorsEnemyRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27)))
-        {
-            if("settings".equals(state)){
-                setEnemyColor(randomizeColor());
-            }
-        }
-        if(menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) 
-        {
-            if ("menu".equals(state) || "pause".equals(state) || "dead".equals(state)){
-                System.exit(0);
-            }
-        }    
+        if("pause".equals(state) && menu.getColorsRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "settings";
+        if("settings".equals(state) && menu.getColorsPlayerRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setPlayerColor(randomizeColor());
+        if("settings".equals(state) && menu.getColorsBackRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27)))  setBackgroundColor(randomizeColor());
+        if("settings".equals(state) && menu.getColorsEnemyRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setEnemyColor(randomizeColor());
+        if(!"game".equals(state) && menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) System.exit(0);
         
         // Player shot and consumed a point
         if(0 < points) {
