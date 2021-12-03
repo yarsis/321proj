@@ -24,52 +24,73 @@ import java.lang.Integer;
 
 public class hiScore implements Serializable {
 
-    int score;
-    String user;
+    int score; // Integer for the game score.
+    String user; // String for the user's input name.
     
+    /**
+     * Constructs a hiScore object with score and name attributes given by
+     * parameters.
+     * 
+     * @param s Integer of the player's score.
+     * @param n String of the player's name.
+     */
     public hiScore(int s, String n)
     {
-        /**
-         * Constructor for Highsscore
-         * @param   int s, string n
-         */
-        score =s;
+        // Set attributes as given by parameters.
+        score = s; 
         setName(n);
     }
     
-    public void sethiScore(int hscore)
+    /**
+     * Set the user's high score.
+     * 
+     * @param hscore Integer for the new high score.
+     */
+    public void setHiScore(int hscore)
     {
-        /**
-         * Set hi score
-         * @params  int hscore
-         */
-        this.score =hscore;
+        
+        this.score = hscore;
     }
     
-    public int gethiScore()
+    /**
+     * Return the user's current high score.
+     * 
+     * @return Value of score.
+     */
+    public int getHiScore()
     {
-        /**
-         * Returns hiscore
-         */
+        
         return score;
     }
     
+    /**
+     * Sets the user's name
+     * 
+     * @param name String of the user's name.
+     */
     public void setName(String name)
     {
-        /**
-         * Sets user name
-        */
+
         this.user = name;
     }
     
+    /**
+     * Return the user's name.
+     * 
+     * @return String stored in user.
+     */
     public String getName()
     {
-        /**
-         * returns user name
-        */
+
         return user;
     }
-    //checks if score is greater than current score
+    
+    /**
+     * Check if high score needs to be updated with a new high score.
+     * 
+     * @param h New score to compare with current high score.
+     * @return Resulting high score.
+     */
     public int compareTo(hiScore h)
     {
         return new Integer(this.score).compareTo(h.score);
