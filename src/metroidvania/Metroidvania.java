@@ -25,8 +25,8 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class Metroidvania {
 
     /**
-     * Main exercise class of the program, creates the main window for the
-     * program and starts the game from the main menu.
+     * Domain model and main entry point of the program, creates the main window
+     * for the program and starts the game from the main menu.
      *
      * @param args the command line arguments
      */
