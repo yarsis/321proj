@@ -5,14 +5,13 @@
 package metroidvania;
 
 import java.awt.Color;
-import java.awt.event.KeyListener;
 
 /**
  * This class represents the main frame of the GUI that displays the game to the
  * user. It sets the location and size of a JFrame window as well as the color 
  * of the background, then displays the game in a PlayPanel. 
  * It also adds key and mouse listeners to enable response to key and mouse presses.
- *  
+ * 
  * @author caden
  */
 public class MainFrame extends javax.swing.JFrame{

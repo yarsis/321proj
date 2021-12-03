@@ -27,7 +27,7 @@ public class Enemy {
     private PlayPanel game; // PlayPanel representing the game being played.
     
     /**
-	 * Constructs an Enemy object by using Polygon to create a triangle of size 
+     * Constructs an Enemy object by using Polygon to create a triangle of size 
      * width and height, with starting point at x and y, and facing a specified
      * direction.
      * 
@@ -37,8 +37,8 @@ public class Enemy {
      * @param height     Y-stretch.
      * @param direction  String referencing up, down, left or right.
      * @param game       PlayPanel of the game being displayed.
-     * @postcondition    Enemy has been initialized.
-	 */
+     * postcondition    Enemy has been initialized.
+     */
     public Enemy(int x, int y, int width, int height, String direction, PlayPanel game) {
         //Set the enemy's attributes as specified by the parameters.
         this.x = x;
@@ -74,13 +74,13 @@ public class Enemy {
                 // enemy and break from the switch statement.
                 Polygon newShapeUp = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeUp;
-				break;
+		break;
             case "down":
                 // Set the x and y coordinates for a down-facing enemy
                 // represented by a Polygon.
-				coordinatesX[0] = x;
-				coordinatesX[1] = x+width/2;
-				coordinatesX[2] = x+width;
+		coordinatesX[0] = x;
+		coordinatesX[1] = x+width/2;
+		coordinatesX[2] = x+width;
                 coordinatesY[0] = y;
                 coordinatesY[1] = y+height;
                 coordinatesY[2] = y;
@@ -90,7 +90,7 @@ public class Enemy {
                 // enemy and break from the switch statement.
                 Polygon newShapeDown = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeDown;
-				break;
+		break;
             case "right":
                 // Set the x and y coordinates for a right-facing enemy
                 // represented by a Polygon.
@@ -106,7 +106,7 @@ public class Enemy {
                 // enemy and break from the switch statement.
                 Polygon newShapeRight = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeRight;
-				break;
+		break;
             case "left":
                 // Set the x and y coordinates for a left-facing enemy
                 // represented by a Polygon.
@@ -122,7 +122,7 @@ public class Enemy {
                 // enemy and break from the switch statement.
                 Polygon newShapeLeft = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeLeft;
-				break;
+		break;
         }
     }
     
@@ -131,8 +131,8 @@ public class Enemy {
      * 
      * @param gtd        Display area for the game.
      * @param color      Color of the enemy.
-     * @precondition     Display area exists.
-     * @postcondition    Enemy has been drawn on the screen.
+     * precondition     Display area exists.
+     * postcondition    Enemy has been drawn on the screen.
      */
     public void draw(Graphics2D gtd, Color color) {
         // Color
@@ -148,8 +148,8 @@ public class Enemy {
      * Function will check if a projectile hit the enemy. If it did, destroy 
 	 * the enemy.
      * 
-     * @precondition     Display and enemy exists.
-     * @postcondition    Enemy was destroyed if hit.
+     * precondition     Display and enemy exists.
+     * postcondition    Enemy was destroyed if hit.
      * @return           Function returns true if an enemy was destroyed.
      */
     public boolean checkShotAt() {
@@ -158,7 +158,6 @@ public class Enemy {
         // Enemy object and return true if there is a collision.
         for(int i = 0; i < game.projList.size(); i++) {
             Projectile proj = game.projList.get(i);
-			
             if(shape.intersects(proj.getHitBox())) {
                 game.projList.remove(i);
                 destroy();
@@ -173,11 +172,11 @@ public class Enemy {
      * Function will hide the enemy from the game area and mark it as 
      * destroyed.
      * 
-     * @precondition     Display and enemy exists.
-     * @postcondition    Enemy was hidden and marked.
+     * precondition     Display and enemy exists.
+     * postcondition    Enemy was hidden and marked.
      */
     public void destroy() {
-		// Reset the shape of the enemy and set destroyed as true.
+	// Reset the shape of the enemy and set destroyed as true.
         shape.reset();
         this.destroyed = true;
     }
@@ -185,8 +184,8 @@ public class Enemy {
     /**
      * Increments the cooldown of the Enemy object by one.
      * 
-     * @precondition Enemy's cooldown variable has been initialized.
-     * @postcondition Enemy's cooldown variable has been increased by one.
+     * precondition Enemy's cooldown variable has been initialized.
+     * postcondition Enemy's cooldown variable has been increased by one.
      */
     public void increaseCooldown() {
         cooldown += 1;
@@ -195,8 +194,8 @@ public class Enemy {
     /**
      * Sets the cooldown of the Enemy object to 0.
      * 
-     * @precondition Enemy's cooldown variable has been initialized.
-     * @postcondition Enemy's cooldown variable is 0.
+     * precondition Enemy's cooldown variable has been initialized.
+     * postcondition Enemy's cooldown variable is 0.
      */
     public void resetCooldown() {
         cooldown = 0;
@@ -214,7 +213,7 @@ public class Enemy {
     /**
      * Function checks if the enemy has been destroyed.
      * 
-     * @precondition     Enemy has been initialized.
+     * precondition     Enemy has been initialized.
      * @return           True if enemy is destroyed.
      */
     public boolean isDestroyed() {
@@ -224,7 +223,7 @@ public class Enemy {
     /**
      * Function returns enemy's top right corner x position.
      * 
-     * @precondition     Enemy has been initialized.
+     * precondition     Enemy has been initialized.
      * @return           X position.
      */
     public int getX() {
@@ -234,7 +233,7 @@ public class Enemy {
     /**
      * Function returns enemy's top right corner y position.
      * 
-     * @precondition     Enemy has been initialized.
+     * precondition     Enemy has been initialized.
      * @return           Y position.
      */
     public int getY() {
@@ -244,7 +243,7 @@ public class Enemy {
     /**
      * Function returns enemy's direction.
      * 
-     * @precondition     Enemy has been initialized.
+     * precondition     Enemy has been initialized.
      * @return           String that represents direction.
      */
     public String getDirection() {
@@ -254,7 +253,7 @@ public class Enemy {
     /**
      * Function returns enemy's width.
      * 
-     * @precondition     Enemy has been initialized.
+     * precondition     Enemy has been initialized.
      * @return           Enemy width.
      */
     public int getWidth() {
@@ -264,7 +263,7 @@ public class Enemy {
     /**
      * Function returns enemy's height.
      * 
-     * @precondition     Enemy has been initialized.
+     * precondition     Enemy has been initialized.
      * @return           Enemy height.
      */
     public int getHeight() {
@@ -274,7 +273,7 @@ public class Enemy {
     /**
      * Function returns enemy's Polygon.
      * 
-     * @precondition     Enemy has been initialized.
+     * precondition     Enemy has been initialized.
      * @return           Enemy Polygon.
      */
     public Polygon getShape() {

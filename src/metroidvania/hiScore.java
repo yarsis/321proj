@@ -98,8 +98,8 @@ public class hiScore implements Serializable {
      * @param h New score being added to the list.
      */
     public static void addScore(hiScore h) {
-        
-        hiScore[] hiScores = gethiScores();
+        // Set up array and member value for iterating.
+        hiScore[] hiScores = getHiScores();
         hiScores[hiScores.length-1]= h;
         for(int i = hiScores.length-2; i >= 0; i--)
         {
@@ -166,7 +166,7 @@ public class hiScore implements Serializable {
      * 
      * @return List h
      */
-    public static hiScore[] gethiScores() {
+    public static hiScore[] getHiScores() {
         
         
         // Check if file exists.
