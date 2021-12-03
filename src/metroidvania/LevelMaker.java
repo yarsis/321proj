@@ -54,22 +54,22 @@ public class LevelMaker {
         switch (select) {
             case 101:
                 terrainStart();
-		break;
+				break;
             case 0:
                 terrain0();
-		break;
+				break;
             case 1:
                 terrain1();
-		break;
+				break;
             case 2:
                 terrain2();
-		break;
+				break;
             case 3:
                 terrain3();
-		break;
+				break;
             case 4:
                 terrain4();
-		break;
+				break;
         }
         
         currentTerrain = select; // Set the current generated level to what was
@@ -108,9 +108,7 @@ public class LevelMaker {
             // Check if value is within limits, generate another if not.
             if(min <= value && value < max + 1) {   // +1 because of truncation
                 // Check if value is not the excluded value, generate another if it is.
-                if ((int)value != avoid) {
-                    return (int)value;
-                }
+                if ((int)value != avoid) return (int)value;
             }
         }
     }
