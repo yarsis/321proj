@@ -26,22 +26,20 @@ public class Enemy {
     private Polygon shape; // Polygon indicating the shape the enemy is drawn as.
     private PlayPanel game; // PlayPanel representing the game being played.
     
-     /**
-      * Constructs an Enemy object by using Polygon to create a triangle of size 
-      * width and height, with starting point at x and y, and facing a specified
-      * direction.
-      * 
-      * @param x          Top left corner's X coordinate.
-      * @param y          Top left corner's Y coordinate.
-      * @param width      X-stretch.
-      * @param height     Y-stretch.
-      * @param direction  String referencing up, down, left or right.
-      * @param game       PlayPanel of the game being displayed.
-      * @postcondition    Enemy has been initialized.
-      */
+    /**
+	 * Constructs an Enemy object by using Polygon to create a triangle of size 
+     * width and height, with starting point at x and y, and facing a specified
+     * direction.
+     * 
+     * @param x          Top left corner's X coordinate.
+     * @param y          Top left corner's Y coordinate.
+     * @param width      X-stretch.
+     * @param height     Y-stretch.
+     * @param direction  String referencing up, down, left or right.
+     * @param game       PlayPanel of the game being displayed.
+     * @postcondition    Enemy has been initialized.
+	 */
     public Enemy(int x, int y, int width, int height, String direction, PlayPanel game) {
-       
-        //Set the enemy's attributes as specified by the parameters.
         this.x = x;
         this.y = y;
         this.height = height;
@@ -49,81 +47,52 @@ public class Enemy {
         this.direction = direction;
         this.game = game;
         
-        this.destroyed = false; // Set new enemy as not destroyed.
-        this.cooldown = 0; // Set initial cooldown to 0.
-        
-        // Declare arrays storing x and y coordinates for the Polygon
-        // object to use and initialize all elements as 0.
+        this.destroyed = false;
+        this.cooldown = 0;
         int coordinatesX[] = {0, 0, 0};
-	int coordinatesY[] = {0, 0, 0};
+		int coordinatesY[] = {0, 0, 0};
 	
-        // Switch cases to create the enemy facing the correct direction given
-        // in the parameters.
         switch(direction) {
             case "up":
-                // Set the x and y coordinates for an up-facing enemy
-                // represented by a Polygon.
                 coordinatesX[0] = x;
                 coordinatesX[1] = x+width/2;
                 coordinatesX[2] = x+width;
                 coordinatesY[0] = y+height;
                 coordinatesY[1] = y;
                 coordinatesY[2] = y+height;
-                
-                // Create an up-facing triangle Polygon with the 3 coordinates
-                // generated with the given x and y values, set it as the shape of the
-                // enemy and break from the switch statement.
                 Polygon newShapeUp = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeUp;
-		break;
+				break;
             case "down":
-                // Set the x and y coordinates for a down-facing enemy
-                // represented by a Polygon.
-		coordinatesX[0] = x;
-		coordinatesX[1] = x+width/2;
-		coordinatesX[2] = x+width;
+				coordinatesX[0] = x;
+				coordinatesX[1] = x+width/2;
+				coordinatesX[2] = x+width;
                 coordinatesY[0] = y;
                 coordinatesY[1] = y+height;
                 coordinatesY[2] = y;
-                
-                // Create a down-facing triangle Polygon with the 3 coordinates
-                // generated with the given x and y values, set it as the shape of the
-                // enemy and break from the switch statement.
                 Polygon newShapeDown = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeDown;
-		break;
+				break;
             case "right":
-                // Set the x and y coordinates for a right-facing enemy
-                // represented by a Polygon.
                 coordinatesX[0] = x;
                 coordinatesX[1] = x+width;
                 coordinatesX[2] = x;
                 coordinatesY[0] = y;
                 coordinatesY[1] = y+height/2;
                 coordinatesY[2] = y+height;
-                
-                // Create a right-facing triangle Polygon with the 3 coordinates
-                // generated with the given x and y values, set it as the shape of the
-                // enemy and break from the switch statement.
                 Polygon newShapeRight = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeRight;
-		break;
+				break;
             case "left":
-                // Set the x and y coordinates for a left-facing enemy
-                // represented by a Polygon.
                 coordinatesX[0] = x+width;
                 coordinatesX[1] = x;
                 coordinatesX[2] = x+width;
                 coordinatesY[0] = y;
                 coordinatesY[1] = y+height/2;
                 coordinatesY[2] = y+height;
-                
-                // Create a left-facing triangle Polygon with the 3 coordinates
-                // generated with the given x and y values, set it as the shape of the
-                // enemy and break from the switch statement.
                 Polygon newShapeLeft = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeLeft;
-		break;
+				break;
         }
     }
     
@@ -136,29 +105,27 @@ public class Enemy {
      * @postcondition    Enemy has been drawn on the screen.
      */
     public void draw(Graphics2D gtd, Color color) {
-        // Colors the enemy whatever color is specified in the parameter.
+        // Color
         gtd.setColor(color);
         gtd.fillPolygon(shape);
         
-        // Draws the shape of the enemy with a black outline.
+        // Outline
         gtd.setColor(Color.BLACK);
         gtd.drawPolygon(shape);
     }
     
     /**
-     * Function will check if a projectile hit the enemy.
-     * If a projectile hits the enemy, destroy it.
+     * Function will check if a projectile hit the enemy. If it did, destroy 
+	 * the enemy.
      * 
      * @precondition     Display and enemy exists.
      * @postcondition    Enemy was destroyed if hit.
      * @return           Function returns true if an enemy was destroyed.
      */
     public boolean checkShotAt() {
-        // Cycle through list of projectiles in the game and test if enemy has
-        // collided with any projectiles. Remove the projectile, destroy the 
-        // Enemy object and return true if there is a collision.
         for(int i = 0; i < game.projList.size(); i++) {
             Projectile proj = game.projList.get(i);
+			
             if(shape.intersects(proj.getHitBox())) {
                 game.projList.remove(i);
                 destroy();
@@ -177,7 +144,6 @@ public class Enemy {
      * @postcondition    Enemy was hidden and marked.
      */
     public void destroy() {
-        // Reset the shape of the enemy and set destroyed as true.
         shape.reset();
         this.destroyed = true;
     }
@@ -218,7 +184,6 @@ public class Enemy {
      * @return           True if enemy is destroyed.
      */
     public boolean isDestroyed() {
-        
         return destroyed;
     }
     
@@ -229,7 +194,6 @@ public class Enemy {
      * @return           X position.
      */
     public int getX() {
-        
         return x;
     }
     
@@ -240,7 +204,6 @@ public class Enemy {
      * @return           Y position.
      */
     public int getY() {
-        
         return y;
     }
     
@@ -251,7 +214,6 @@ public class Enemy {
      * @return           String that represents direction.
      */
     public String getDirection() {
-        
         return direction;
     }
     
@@ -262,7 +224,6 @@ public class Enemy {
      * @return           Enemy width.
      */
     public int getWidth() {
-        
         return width;
     }
     
@@ -273,7 +234,6 @@ public class Enemy {
      * @return           Enemy height.
      */
     public int getHeight() {
-       
         return height;
     }
     
@@ -284,7 +244,6 @@ public class Enemy {
      * @return           Enemy Polygon.
      */
     public Polygon getShape() {
-        
         return shape;
     }
 }
