@@ -33,10 +33,10 @@ public class CheckMouse implements MouseListener{
      * Override of the default mouseClicked method.
      * Calls the panel's mouse click response given the MouseEvent passed.
      * 
+     * precondition     CheckMouse object is listening to a PlayPanel.
+     * postcondition    Panel's response to a mouse click is executed.
      * @param e MouseEvent indicating the mouse has been clicked, passed as the
      *          parameter for the game's mouseClicked method to call a response.
-     * @precondition     CheckMouse object is listening to a PlayPanel.
-     * @postcondition    Panel's response to a mouse click is executed.
      */
     @Override
     public void mouseClicked(MouseEvent e) {

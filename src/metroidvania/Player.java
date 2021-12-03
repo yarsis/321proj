@@ -53,10 +53,11 @@ public class Player {
      * Function will modify the player according to pressed keys and 
      * interaction with the game.
      * 
-     * @precondition     Player and game area exists.
-     * @postcondition    Player has been modified accordingly.
+     * precondition     Player and game area exists.
+     * postcondition    Player has been modified accordingly.
      */
     public void set() {
+        
         //Update the hitbox as the player moves.
         x += xspeed;
         y += yspeed;
@@ -85,7 +86,6 @@ public class Player {
         // Check if player is on the ground and stop y axis movement if so.
         if(keyUp) {
             hitBox.y += 1;
-			
             for(int i = 0; i < game.gameTerrain.size(); i++) {
                 Terrain ter = game.gameTerrain.get(i);
                 if(ter.hitBox.intersects(hitBox)) yspeed = -8;
@@ -106,7 +106,6 @@ public class Player {
         hitBox.x += xspeed;
         for(int i = 0; i < game.gameTerrain.size(); i++) {
                 Terrain ter = game.gameTerrain.get(i);
-				
                 if(hitBox.intersects(ter.hitBox)) {
                     hitBox.x -= xspeed;
                     
@@ -122,7 +121,6 @@ public class Player {
         hitBox.y += yspeed;
         for(int i = 0; i < game.gameTerrain.size(); i++) {
                 Terrain ter = game.gameTerrain.get(i);
-				
                 if(hitBox.intersects(ter.hitBox)) {
                     hitBox.y -= yspeed;
                     
@@ -160,17 +158,17 @@ public class Player {
             
             // If the enemy has not been destroyed, shoot a projectile and restart its cooldown.
             if(!oneEnemy.isDestroyed()) {
-			// If enemy is facing up or down, projectile is shot on a vertical axis.
+		// If enemy is facing up or down, projectile is shot on a vertical axis.
                 if("up".equals(oneEnemy.getDirection()) || "down".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getX() - width + 20) <= x && x <= (oneEnemy.getX() + oneEnemy.getWidth() - 20) && oneEnemy.getCooldown() > 100) {
-						// Shoot a projectile up at the player if they are above the enemy.
+			// Shoot a projectile up at the player if they are above the enemy.
                         if(y > oneEnemy.getY()) {
                             Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() + 50, 0, 4, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
-						// Otherwise, shoot a projectile down at the player.
+			// Otherwise, shoot a projectile down at the player.
                         else {
                             Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() - 50, 0, -4, game, Color.RED);
                             game.projList.add(shot);
@@ -183,14 +181,14 @@ public class Player {
                 // If enemy is facing left or right, projectile is shot on a horizontal axis.
                 if("left".equals(oneEnemy.getDirection()) || "right".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getY() - height + 20) <= y && y <= (oneEnemy.getY() + oneEnemy.getHeight() - 20) && oneEnemy.getCooldown() > 100) {
-						// Shoot a projectile right at the player if they are to the enemy's right.
+			// Shoot a projectile right at the player if they are to the enemy's right.
                         if(x > oneEnemy.getX()) {
                             Projectile shot = new Projectile(oneEnemy.getX() + 50, oneEnemy.getY() + 20 , 4, 0, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
-						// Otherwise, shoot a projectile left at the player.
+			// Otherwise, shoot a projectile left at the player.
                         else {
                             Projectile shot = new Projectile(oneEnemy.getX() - 12, oneEnemy.getY() + 20, -4, 0, game, Color.RED);
                             game.projList.add(shot);
@@ -226,8 +224,9 @@ public class Player {
                     health = health/2;
                     oneEnemy.destroy();
 		    
-					// Propulse player appropriate to the enemy's position.
+		    // Propulse player appropriate to the enemy's position.
                     if(x < oneEnemy.getX()) xspeed = -7;
+					
                     else xspeed = 7;
                 }
             }
@@ -244,13 +243,14 @@ public class Player {
      * Function will teleport the player to the specified location and stop 
      * all movement.
      * 
+     * precondition     Game and player have been initialized.
+     * postcondition    Player has been moved.
      * @param x          Integer of new x position.
      * @param y          Integer of new y position.
-     * @precondition     Game and player have been initialized.
-     * @postcondition    Player has been moved.
+     * 
      */
     public void move(int x, int y) {
-		// Set player position to coordinates given in the parameter, stop movement.
+	// Set player position to coordinates given in the parameter, stop movement.
         this.x = x;
         this.y = y;
         xspeed = 0;
@@ -260,13 +260,14 @@ public class Player {
     /**
      * Function will draw the player at its location.
      * 
+     * precondition     Display area exists.
+     * postcondition    Player has been drawn.
      * @param gtd        Display area for the game.
      * @param color      Color of the player.
-     * @precondition     Display area exists.
-     * @postcondition    Player has been drawn.
+     * 
      */
     public void drawPlayer(Graphics2D gtd, Color color) {
-		// Color the player rectangle the specified color.
+	// Color the player rectangle the specified color.
         gtd.setColor(color);
         gtd.fillRect(x, y, width, height);
     }
@@ -274,7 +275,7 @@ public class Player {
     /**
      * Function returns player's x position.
      * 
-     * @precondition     Player class has been initialized.
+     * precondition     Player class has been initialized.
      * @return           X position.
      */
     public int getX() {
@@ -283,7 +284,7 @@ public class Player {
     
     /**
      * Function returns player's y position.
-     * @precondition     Player class has been initialized.
+     * precondition     Player class has been initialized.
      * @return           Y position.
      */
     public int getY() {
@@ -292,7 +293,7 @@ public class Player {
     
     /**
      * Function returns player's health.
-     * @precondition     Player class has been initialized.
+     * precondition     Player class has been initialized.
      * @return           Health.
      */
     public int getHealth() {
@@ -302,9 +303,9 @@ public class Player {
     /**
      * Function sets the status for left movement.
      * 
+     * precondition     Player class has been initialized.
+     * postcondition    Player changed its left movement condition.
      * @param status     Boolean that represents the status for movement.
-     * @precondition     Player class has been initialized.
-     * @postcondition    Player changed its left movement condition.
      */
     public void setKeyLeft(boolean status) {
         this.keyLeft = status;
@@ -313,9 +314,9 @@ public class Player {
     /**
      * Function sets the status for right movement.
      * 
+     * precondition     Player class has been initialized.
+     * postcondition    Player changed its right movement condition.
      * @param status     Boolean that represents the status for movement.
-     * @precondition     Player class has been initialized.
-     * @postcondition    Player changed its right movement condition.
      */
     public void setKeyRight(boolean status) {
         this.keyRight = status;
@@ -323,9 +324,10 @@ public class Player {
     
     /**
      * Function sets the status for jump.
+     * 
+     * precondition     Player class has been initialized.
+     * postcondition    Player changed its jumping condition.
      * @param status     Boolean that represents the status for movement.
-     * @precondition     Player class has been initialized.
-     * @postcondition    Player changed its jumping condition.
      */
     public void setKeyUp(boolean status) {
         this.keyUp = status;

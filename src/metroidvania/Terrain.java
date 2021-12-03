@@ -43,6 +43,8 @@ public class Terrain {
     /**
      * Function draws the terrain on the screen.
      * 
+     * precondition   Game display exists.
+     * postcondition  Terrain rectangle is properly displayed.
      * @param gtd Display area for the game.
      */
     public void draw(Graphics2D gtd){

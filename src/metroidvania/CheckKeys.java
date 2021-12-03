@@ -33,10 +33,10 @@ public class CheckKeys extends KeyAdapter{
      * Override of the default keyPressed method.
      * Calls the game's key press response given the KeyEvent passed.
      * 
+     * precondition     CheckKeys object is listening to a PlayPanel.
+     * postcondition    Game's response to a key press is executed.
      * @param e KeyEvent indicating a key has been pressed, passed as the
      *          parameter for the game's keyPress method to call a response.
-     * @precondition     CheckKeys object is listening to a PlayPanel.
-     * @postcondition    Game's response to a key press is executed.
      */
     @Override
     public void keyPressed(KeyEvent e){
@@ -47,10 +47,10 @@ public class CheckKeys extends KeyAdapter{
      * Override of the default keyReleased method.
      * Calls the game's key release response given the KeyEvent passed.
      * 
+     * precondition     CheckKeys object is listening to a PlayPanel.
+     * postcondition    Game's response to a key release is executed.
      * @param e KeyEvent indicating a key has been released, passed as the
      *          parameter for the game's keyRelease method to call a response.
-     * @precondition     CheckKeys object is listening to a PlayPanel.
-     * @postcondition    Game's response to a key release is executed.
      */
     @Override
     public void keyReleased(KeyEvent e){

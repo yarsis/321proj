@@ -21,22 +21,22 @@ public class Projectile {
     private double xspeed, yspeed; // Double values for movement speed.
     private final Rectangle hitBox; // Rectangle for the projectile's hitbox.
     private final PlayPanel game; // PlayPanel of the game using the projectile.
-    private final Color color; // Color of the projectile.
+    private Color color; // Color of the projectile.
     
      /**
       * Construct a Projectile object in the game with an xy position, movement
       * speed, and color specified by parameters. Other attributes are set to
       * defaults and a hitbox is generated with the attributes.
       * 
-      * @param x		Projectile's initial x coordinate.
-      * @param y		Projectile's initial y coordinate.
-      * @param xspeed	Projectile's initial horizontal speed.
-      * @param yspeed	Projectile's initial vertical speed.
-      * @param game		PlayPanel game using the projectile.
-      * @param newColor	Color of the projectile.
+      * @param x Projectile's initial x coordinate.
+      * @param y Projectile's initial y coordinate.
+      * @param xspeed Projectile's initial horizontal speed.
+      * @param yspeed Projectile's initial vertical speed.
+      * @param game PlayPanel game using the projectile.
+      * @param newColor Color of the projectile.
       */
     public Projectile(int x, int y, int xspeed, int yspeed, PlayPanel game, Color newColor) {
-		// Set attributes according to parameters and defaults.
+	// Set attributes according to parameters and defaults.
         this.game = game;
         this.x = x;
         this.y = y;
@@ -54,8 +54,8 @@ public class Projectile {
      * Function will move projectile according to its xspeed and yspeed 
 	 * parameters.
      * 
-     * @precondition		Projectile has been initialized.
-     * @postcondition		Projectile has moved.	
+     * precondition		Projectile has been initialized.
+     * postcondition	        Projectile has moved.	
      */
     public void activate() {
 	// Update the projectile's position and hitbox.
@@ -98,9 +98,9 @@ public class Projectile {
     /**
      * Function will draw the projectile.
      * 
+     * precondition     Display area exists.
+     * postcondition    Projectile has been drawn.
      * @param gtd        Display area for the game.
-     * @precondition     Display area exists.
-     * @postcondition    Projectile has been drawn.
      */
     public void drawProj(Graphics2D gtd) {
 	// Make a projectile rectangle in the specified color.
@@ -111,7 +111,7 @@ public class Projectile {
     /**
      * Function returns the hit box for the projectile.
      * 
-     * @precondition     Projectile has been initialized.
+     * precondition     Projectile has been initialized.
      * @return           Projectile's hit box.
      */
     public Rectangle getHitBox() {
@@ -121,7 +121,7 @@ public class Projectile {
     /**
      * Function returns projectile's width.
      * 
-     * @precondition     Projectile has been initialized.
+     * precondition     Projectile has been initialized.
      * @return           Projectile width.
      */
     public int getWidth() {
@@ -131,7 +131,7 @@ public class Projectile {
     /**
      * Function returns projectile's height.
      * 
-     * @precondition     Projectile has been initialized.
+     * precondition     Projectile has been initialized.
      * @return           Projectile height.
      */
     public int getHeight() {
@@ -141,7 +141,7 @@ public class Projectile {
     /**
      * Function returns projectile's x speed.
      * 
-     * @precondition     Projectile has been initialized.
+     * precondition     Projectile has been initialized.
      * @return           Projectile x speed.
      */
     public double getXSpeed() {
@@ -151,7 +151,7 @@ public class Projectile {
     /**
      * Function returns projectile's y speed.
      * 
-     * @precondition     Projectile has been initialized.
+     * precondition     Projectile has been initialized.
      * @return           Projectile y speed.
      */
     public double getYSpeed() {
