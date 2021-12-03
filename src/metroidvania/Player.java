@@ -86,6 +86,7 @@ public class Player {
         // Check if player is on the ground and stop y axis movement if so.
         if(keyUp) {
             hitBox.y += 1;
+			
             for(int i = 0; i < game.gameTerrain.size(); i++) {
                 Terrain ter = game.gameTerrain.get(i);
                 if(ter.hitBox.intersects(hitBox)) yspeed = -8;
@@ -138,9 +139,7 @@ public class Player {
             move(600, 500);
             game.makeTerrain();
             
-            if(game.getScore() <= 0) {
-                game.setScore(1);
-            }
+            if(game.getScore() <= 0) game.setScore(1);
         }
         
         // Horizontal movement limiter.
@@ -158,17 +157,17 @@ public class Player {
             
             // If the enemy has not been destroyed, shoot a projectile and restart its cooldown.
             if(!oneEnemy.isDestroyed()) {
-		// If enemy is facing up or down, projectile is shot on a vertical axis.
+			// If enemy is facing up or down, projectile is shot on a vertical axis.
                 if("up".equals(oneEnemy.getDirection()) || "down".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getX() - width + 20) <= x && x <= (oneEnemy.getX() + oneEnemy.getWidth() - 20) && oneEnemy.getCooldown() > 100) {
-			// Shoot a projectile up at the player if they are above the enemy.
+						// Shoot a projectile up at the player if they are above the enemy.
                         if(y > oneEnemy.getY()) {
                             Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() + 50, 0, 4, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
-			// Otherwise, shoot a projectile down at the player.
+						// Otherwise, shoot a projectile down at the player.
                         else {
                             Projectile shot = new Projectile(oneEnemy.getX() + 20, oneEnemy.getY() - 50, 0, -4, game, Color.RED);
                             game.projList.add(shot);
@@ -181,14 +180,14 @@ public class Player {
                 // If enemy is facing left or right, projectile is shot on a horizontal axis.
                 if("left".equals(oneEnemy.getDirection()) || "right".equals(oneEnemy.getDirection())) {
                     if((oneEnemy.getY() - height + 20) <= y && y <= (oneEnemy.getY() + oneEnemy.getHeight() - 20) && oneEnemy.getCooldown() > 100) {
-			// Shoot a projectile right at the player if they are to the enemy's right.
+						// Shoot a projectile right at the player if they are to the enemy's right.
                         if(x > oneEnemy.getX()) {
                             Projectile shot = new Projectile(oneEnemy.getX() + 50, oneEnemy.getY() + 20 , 4, 0, game, Color.RED);
                             game.projList.add(shot);
                             shot.activate();
                             oneEnemy.resetCooldown();
                         }
-			// Otherwise, shoot a projectile left at the player.
+						// Otherwise, shoot a projectile left at the player.
                         else {
                             Projectile shot = new Projectile(oneEnemy.getX() - 12, oneEnemy.getY() + 20, -4, 0, game, Color.RED);
                             game.projList.add(shot);
@@ -218,13 +217,13 @@ public class Player {
         for(int i = 0; i < game.enemyList.size(); i++) {
             Enemy oneEnemy = game.enemyList.get(i); // Set the enemy that has been hit.
 		
-	    // If the enemy has not been destroyed, halve player's health and destroy the enemy.	
+			// If the enemy has not been destroyed, halve player's health and destroy the enemy.	
             if(!oneEnemy.isDestroyed()) {
                 if(oneEnemy.getShape().intersects(hitBox)) {
                     health = health/2;
                     oneEnemy.destroy();
 		    
-		    // Propulse player appropriate to the enemy's position.
+					// Propulse player appropriate to the enemy's position.
                     if(x < oneEnemy.getX()) xspeed = -7;
 					
                     else xspeed = 7;
@@ -250,7 +249,7 @@ public class Player {
      * 
      */
     public void move(int x, int y) {
-	// Set player position to coordinates given in the parameter, stop movement.
+		// Set player position to coordinates given in the parameter, stop movement.
         this.x = x;
         this.y = y;
         xspeed = 0;
