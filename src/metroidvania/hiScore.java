@@ -17,8 +17,14 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javax.swing.JOptionPane;
 import java.lang.Integer;
+
 /**
- *
+ * This class represents the game's high score system as a score value with a
+ * name for the player and a list of the player's highest scores is kept to store them. Scores are
+ * compared after being added to the list to order them and the list is saved in
+ * a file that is read by the game to retrieve information for the list and
+ * written to when the list is updated.
+ * 
  * @author adile
  */
 
@@ -85,93 +91,99 @@ public class hiScore implements Serializable {
         return new Integer(this.score).compareTo(h.score);
     }
     
+    /**
+     * Add a new high score to list.
+     * Ensures the list stays ordered.
+     * 
+     * @param h New score being added to the list.
+     */
     public static void addScore(hiScore h) {
-        /**
-         * Adds new high score to list
-         * ensures the list stays ordered
-         * @params  hiScore h
-         */
+        
         hiScore[] hiScores = gethiScores();
         hiScores[hiScores.length-1]= h;
         for(int i = hiScores.length-2; i >= 0; i--)
         {
-            //go through list and check if they're in the right order
+            // Go through list and check if they're in the right order.
             if(hiScores[i+1].compareTo(hiScores[i])>0)
             {
-               hiScore t = hiScores[i] ;   //temporary variable
-               hiScores[i] = hiScores[i+1]; //move around scores
+               hiScore t = hiScores[i] ;   // Temporary variable.
+               hiScores[i] = hiScores[i+1]; // Move around scores.
                hiScores[i+1] = t;                          
             }
         }
-		
+        
+	// Write results to file.	
         try
         {
-            //write results to file
             ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("hiscore.dat"));    
             o.writeObject(h);
             o.close();
         }
         catch(FileNotFoundException e)
         {
-			e.printStackTrace();
+            e.printStackTrace(); // Throw exception for file not being present.
         }
         catch(IOException e) 
         {
-            e.printStackTrace();
+            e.printStackTrace(); // Throw exception for bad input/output.
         }
     }
     
+    /**
+     * Initializes high score file (.dat).
+     * Contains lists of user names and high scores.
+     * List format: 0, name
+     */
     public static void initScore() {
-        /**
-         * initializes high score file (.dat)
-         * contains lists of user names and high scores
-         * list format: 0, name
-         */
         
+        // Create hiScore array to store list of scores.
         hiScore[] h = { new hiScore(0, " "), new hiScore(0, " "),
                         new hiScore(0, " "), new hiScore(0, " "),
                         new hiScore(0, " "), new hiScore(0, " "),
                         new hiScore(0, " "), new hiScore(0, " "),                   
                         new hiScore(0, " "), new hiScore(0, " ")};
-		
-		try
-		{
-			//create, write and close file
-			ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("hiscore.dat"));    
-			o.writeObject(h);
-			o.close();
-		}
-		catch(FileNotFoundException e)
-		{
-			  e.printStackTrace();
-		}
-		catch(IOException e) 
-		{
-			e.printStackTrace();
-		}    
+	
+        // Create, write and close file.
+	try
+	{
+            ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("hiscore.dat"));    
+            o.writeObject(h);
+            o.close();
+	}
+        // Throw exceptions.
+	catch(FileNotFoundException e)
+	{
+            e.printStackTrace();
+	}
+	catch(IOException e) 
+	{
+            e.printStackTrace();
+	}    
     }
     
+    /**
+     * Read scores in hiScore file and add them to the score list.
+     * 
+     * @return List h
+     */
     public static hiScore[] gethiScores() {
-        /**
-         * read hiscore file 
-         * imports value into hiScor[]
-         * returns list h
-         */
         
-        //check if file exits
+        
+        // Check if file exists.
         if(!new File("hiscore.dat").exists())
         {
-            //create it if it does not
+            // Create it if it does not.
             initScore();
         }
 		
         try
         {
-			//read from file into list
+            // Read from file into list.
             ObjectInputStream o=new ObjectInputStream(new FileInputStream("hiscore.dat"));
             hiScore[] h = (hiScore[]) o.readObject();
             return h;
         }
+        // Throw exceptions.
         catch(IOException e)
         {
             e.printStackTrace();
