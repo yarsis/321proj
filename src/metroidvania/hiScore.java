@@ -23,7 +23,6 @@ import java.lang.Integer;
  */
 
 public class hiScore implements Serializable {
-
     int score; // Integer for the game score.
     String user; // String for the user's input name.
     
@@ -34,8 +33,7 @@ public class hiScore implements Serializable {
      * @param s Integer of the player's score.
      * @param n String of the player's name.
      */
-    public hiScore(int s, String n)
-    {
+    public hiScore(int s, String n) {
         // Set attributes as given by parameters.
         score = s; 
         setName(n);
@@ -46,10 +44,8 @@ public class hiScore implements Serializable {
      * 
      * @param hscore Integer for the new high score.
      */
-    public void setHiScore(int hscore)
-    {
-        
-        this.score = hscore;
+    public void setHiScore(int hscore) {
+		this.score = hscore;
     }
     
     /**
@@ -57,10 +53,8 @@ public class hiScore implements Serializable {
      * 
      * @return Value of score.
      */
-    public int getHiScore()
-    {
-        
-        return score;
+    public int getHiScore() {
+		return score;
     }
     
     /**
@@ -68,10 +62,8 @@ public class hiScore implements Serializable {
      * 
      * @param name String of the user's name.
      */
-    public void setName(String name)
-    {
-
-        this.user = name;
+    public void setName(String name) {
+		this.user = name;
     }
     
     /**
@@ -79,10 +71,8 @@ public class hiScore implements Serializable {
      * 
      * @return String stored in user.
      */
-    public String getName()
-    {
-
-        return user;
+    public String getName() {
+		return user;
     }
     
     /**
@@ -91,15 +81,13 @@ public class hiScore implements Serializable {
      * @param h New score to compare with current high score.
      * @return Resulting high score.
      */
-    public int compareTo(hiScore h)
-    {
+    public int compareTo(hiScore h) {
         return new Integer(this.score).compareTo(h.score);
     }
     
-    public static void addScore(hiScore h)
-    {
+    public static void addScore(hiScore h) {
         /**
-         * Adds new hiscore to list
+         * Adds new high score to list
          * ensures the list stays ordered
          * @params  hiScore h
          */
@@ -115,6 +103,7 @@ public class hiScore implements Serializable {
                hiScores[i+1] = t;                          
             }
         }
+		
         try
         {
             //write results to file
@@ -124,17 +113,15 @@ public class hiScore implements Serializable {
         }
         catch(FileNotFoundException e)
         {
-              e.printStackTrace();
+			e.printStackTrace();
         }
         catch(IOException e) 
         {
             e.printStackTrace();
-        } 
-        
+        }
     }
     
-    public static void initScore()
-    {
+    public static void initScore() {
         /**
          * initializes high score file (.dat)
          * contains lists of user names and high scores
@@ -146,25 +133,25 @@ public class hiScore implements Serializable {
                         new hiScore(0, " "), new hiScore(0, " "),
                         new hiScore(0, " "), new hiScore(0, " "),                   
                         new hiScore(0, " "), new hiScore(0, " ")};
-     try
-     {
-        //create, write and close file
-        ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("hiscore.dat"));    
-        o.writeObject(h);
-        o.close();
-     }
-     catch(FileNotFoundException e)
-     {
-           e.printStackTrace();
-     }
-     catch(IOException e) 
-     {
-         e.printStackTrace();
-     }    
+		
+		try
+		{
+			//create, write and close file
+			ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("hiscore.dat"));    
+			o.writeObject(h);
+			o.close();
+		}
+		catch(FileNotFoundException e)
+		{
+			  e.printStackTrace();
+		}
+		catch(IOException e) 
+		{
+			e.printStackTrace();
+		}    
     }
     
-    public static hiScore[] gethiScores()
-    {
+    public static hiScore[] gethiScores() {
         /**
          * read hiscore file 
          * imports value into hiScor[]
@@ -177,12 +164,13 @@ public class hiScore implements Serializable {
             //create it if it does not
             initScore();
         }
+		
         try
         {
-            //read from file into list
-             ObjectInputStream o=new ObjectInputStream(new FileInputStream("hiscore.dat"));
-             hiScore[] h = (hiScore[]) o.readObject();
-             return h;
+			//read from file into list
+            ObjectInputStream o=new ObjectInputStream(new FileInputStream("hiscore.dat"));
+            hiScore[] h = (hiScore[]) o.readObject();
+            return h;
         }
         catch(IOException e)
         {
@@ -190,9 +178,9 @@ public class hiScore implements Serializable {
         }
         catch(ClassNotFoundException e)
         {
-             e.printStackTrace();
+            e.printStackTrace();
         }
+		
         return null;
     }
-
 }
