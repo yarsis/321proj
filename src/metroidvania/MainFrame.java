@@ -11,6 +11,7 @@ import java.awt.Color;
  * user. It sets the location and size of a JFrame window as well as the color 
  * of the background, then displays the game in a PlayPanel. 
  * It also adds key and mouse listeners to enable response to key and mouse presses.
+ * Subclass of JFrame, and is part of the View of the GUI.
  * 
  * @author caden
  */

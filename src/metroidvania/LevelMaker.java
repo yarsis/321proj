@@ -31,10 +31,10 @@ public class LevelMaker {
      * Function will delete the current terrain and all its contents, and 
      * use a random integer to select a new terrain.
      * 
-     * @param firstLevel	boolean that checks if the first level should 
-	 *						be used.
-     * postcondition		Old data has been erased and new terrain has 
-	 *						been generated.
+     * @param firstLevel     boolean that checks if the first level should 
+     *                       be used.
+     * postcondition        Old data has been erased and new terrain has 
+     *                       been generated.
      */
     public void makeTerrain(boolean firstLevel) {
         int select; // Declare the integer used to select a specific terrain to generate.
@@ -54,22 +54,22 @@ public class LevelMaker {
         switch (select) {
             case 101:
                 terrainStart();
-				break;
+		break;
             case 0:
                 terrain0();
-				break;
+		break;
             case 1:
                 terrain1();
-				break;
+		break;
             case 2:
                 terrain2();
-				break;
+		break;
             case 3:
                 terrain3();
-				break;
+		break;
             case 4:
                 terrain4();
-				break;
+		break;
         }
         
         currentTerrain = select; // Set the current generated level to what was
@@ -95,7 +95,9 @@ public class LevelMaker {
         
         // Return the integer 101 to call for the first level to be generated
         // if firstLevel is true.
-        if (firstLevel) return 101;
+        if (firstLevel) {
+            return 101;
+        }
         
         // Generate a random allowed integer 1 - 100 and assign it to value
         // then return that value.
@@ -105,7 +107,9 @@ public class LevelMaker {
             // Check if value is within limits, generate another if not.
             if(min <= value && value < max + 1) {   // +1 because of truncation
                 // Check if value is not the excluded value, generate another if it is.
-                if ((int)value != avoid) return (int)value;
+                if ((int)value != avoid) {
+                    return (int)value;
+                }
             }
         }
     }
@@ -114,7 +118,7 @@ public class LevelMaker {
      * Function generates the first level of the game.
      * 
      * postcondition Terrain and enemies for the first level are properly 
-	 * generated.
+     * generated and displayed.
      */
     public void terrainStart() {
         //One way
@@ -143,7 +147,8 @@ public class LevelMaker {
     /**
      * Function generates level 0.
      * 
-     * postcondition Terrain and enemies for level 0 are properly generated.
+     * postcondition Terrain and enemies for level 0 are properly generated 
+	 * and displayed.
      */
     public void terrain0() {
         //Blocks on ground
@@ -174,7 +179,8 @@ public class LevelMaker {
     /**
      * Function generates level 1.
      * 
-     * postcondition Terrain and enemies for level 1 are properly generated.
+     * postcondition Terrain and enemies for level 1 are properly generated 
+	 * and displayed.
      */
     public void terrain1() {
         // Hole and 2 floating bases
@@ -206,7 +212,8 @@ public class LevelMaker {
     /**
      * Function generates level 2.
      * 
-     * postcondition Terrain and enemies for level 2 are properly generated.
+     * postcondition Terrain and enemies for level 2 are properly generated 
+	 * and displayed.
      */
     public void terrain2() {
         // Hole with towers, stairs on right tower
@@ -246,7 +253,8 @@ public class LevelMaker {
     /**
      * Function generates level 3.
      * 
-     * postcondition Terrain and enemies for level 3 are properly generated.
+     * postcondition Terrain and enemies for level 3 are properly generated 
+	 * and displayed.
      */
     public void terrain3() {
         // Stairs and 1-block fall
@@ -287,7 +295,8 @@ public class LevelMaker {
     /**
      * Function generates level 4.
      * 
-     * postcondition Terrain and enemies for level 4 are properly generated.
+     * postcondition Terrain and enemies for level 4 are properly generated 
+	 * and displayed.
      */
     public void terrain4() {
         //Single jumping stones

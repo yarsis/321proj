@@ -14,8 +14,10 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
  * The player accumulates points, which are spent as ammo to shoot enemies while
  * navigating the levels. Enemies target the player, and are destroyed after being
  * hit by the player. The player loses when their health reaches 0 or they fall
- * out of the level. The game keeps the score and can save the player's name
- * and high score after the game is lost.
+ * out of the level. The game will be able to keep the score and can save the player's name
+ * and high score after the game is lost(could not be implemented). The GUI is
+ * handled with a complex MVC model, where Controller objects communicate actions
+ * between the user and the program.
  * 
  * @author caden
  */

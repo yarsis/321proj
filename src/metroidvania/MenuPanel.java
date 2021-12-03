@@ -16,9 +16,9 @@ import java.util.TimerTask;
 
 /**
  * This class generates one of the menus to be displayed in the game. The menu
- * is an extension of the JPanel that implements an ActionListener. A main menu,
+ * is a subclass of the JPanel that inherits from ActionListener. A main menu,
  * pause menu, settings menu, and game over screen are included as the different
- * menu types.
+ * menu types. Functions as a part of the Model of the GUI.
  * 
  * @author caden, Henry Schulz
  */
@@ -101,7 +101,7 @@ public class MenuPanel extends javax.swing.JPanel implements ActionListener {
      * 
      * precondition     Game area exists.
      * postcondition    Pause menu is drawn.
-     * @param g			Graphics object used to generate visuals.
+     * @param g          Graphics object used to generate visuals.
 
      */
     public void paintPause(Graphics g) {

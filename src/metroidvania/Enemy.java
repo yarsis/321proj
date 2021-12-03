@@ -11,8 +11,8 @@ import java.awt.Polygon;
 
 /**
  * This class represents an enemy made of a triangle-shaped Polygon facing a
- * specified direction. The enemy has statuses for cooldown and destroyed state,
- * with methods to set and return all attributes.
+ * specified direction. The enemy has statuses for cooldown and destroyed state, and
+ * attributes can be modified.
  * 
  * @author Henry Schulz
  */
@@ -54,7 +54,7 @@ public class Enemy {
         // Declare arrays storing x and y coordinates for the Polygon
         // object to use and initialize all elements as 0.
         int coordinatesX[] = {0, 0, 0};
-		int coordinatesY[] = {0, 0, 0};
+	int coordinatesY[] = {0, 0, 0};
 	
         // Switch cases to create the enemy facing the correct direction given
         // in the parameters.
@@ -74,13 +74,13 @@ public class Enemy {
                 // enemy and break from the switch statement.
                 Polygon newShapeUp = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeUp;
-				break;
+		break;
             case "down":
                 // Set the x and y coordinates for a down-facing enemy
                 // represented by a Polygon.
-				coordinatesX[0] = x;
-				coordinatesX[1] = x+width/2;
-				coordinatesX[2] = x+width;
+		coordinatesX[0] = x;
+		coordinatesX[1] = x+width/2;
+		coordinatesX[2] = x+width;
                 coordinatesY[0] = y;
                 coordinatesY[1] = y+height;
                 coordinatesY[2] = y;
@@ -90,7 +90,7 @@ public class Enemy {
                 // enemy and break from the switch statement.
                 Polygon newShapeDown = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeDown;
-				break;
+		break;
             case "right":
                 // Set the x and y coordinates for a right-facing enemy
                 // represented by a Polygon.
@@ -106,7 +106,7 @@ public class Enemy {
                 // enemy and break from the switch statement.
                 Polygon newShapeRight = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeRight;
-				break;
+		break;
             case "left":
                 // Set the x and y coordinates for a left-facing enemy
                 // represented by a Polygon.
@@ -122,7 +122,7 @@ public class Enemy {
                 // enemy and break from the switch statement.
                 Polygon newShapeLeft = new Polygon(coordinatesX, coordinatesY, 3);
                 this.shape = newShapeLeft;
-				break;
+		break;
         }
     }
     
@@ -158,7 +158,6 @@ public class Enemy {
         // Enemy object and return true if there is a collision.
         for(int i = 0; i < game.projList.size(); i++) {
             Projectile proj = game.projList.get(i);
-			
             if(shape.intersects(proj.getHitBox())) {
                 game.projList.remove(i);
                 destroy();

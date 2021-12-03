@@ -9,8 +9,8 @@ import java.awt.event.KeyEvent;
 
 /**
  * This class checks key presses and releases detected in a game PlayPanel.
- * Based in the KeyAdapter object, overrides its methods to respond specifically
- * to the game.
+ * Subclass of the KeyAdapter object, overrides its methods to respond specifically
+ * to the game. Functions as part of the Controller of the GUI.
  * 
  * @author caden
  */

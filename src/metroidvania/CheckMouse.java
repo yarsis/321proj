@@ -9,8 +9,8 @@ import java.awt.event.MouseListener;
 
 /**
  * This class checks mouse clicks detected in a game PlayPanel.
- * Based in the MouseListerner object, overrides its methods to respond specifically
- * to the game.
+ * Inherits from the MouseListener object, overrides its methods to respond specifically
+ * to the game. Functions as part of the Controller of the GUI.
  * 
  * @author caden
  */
