@@ -221,7 +221,7 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
         if("settings".equals(state) && menu.getColorsEnemyRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setEnemyColor(randomizeColor());
         
         // Player shot and consumed a point
-        if(0 < points) {
+        if("game".equals(state) && 0 < points) {
             if ("game".equals(state)) {
                 // Up
                 if(e.getPoint().y < samus.getY()) {
