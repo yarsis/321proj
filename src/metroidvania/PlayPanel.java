@@ -214,11 +214,36 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
         */
         // Menu buttons
         if(menu.getPlayRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "game";
-        if(menu.getColorsRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) state = "settings";
-        if(menu.getColorsPlayerRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setPlayerColor(randomizeColor());
-        if(menu.getColorsBackRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setBackgroundColor(randomizeColor());
-        if(menu.getColorsEnemyRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) setEnemyColor(randomizeColor());
-        if(menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) System.exit(0);
+        if(menu.getColorsRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27)))
+        {
+            if ("pause".equals(state)){
+                state = "settings";
+            }
+        }
+        if(menu.getColorsPlayerRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27)))
+        {
+            if("settings".equals(state)){
+               setPlayerColor(randomizeColor());
+            }
+        }
+        if(menu.getColorsBackRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) 
+        {
+            if("settings".equals(state)){
+                setBackgroundColor(randomizeColor());
+            }
+        }
+        if(menu.getColorsEnemyRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27)))
+        {
+            if("settings".equals(state)){
+                setEnemyColor(randomizeColor());
+            }
+        }
+        if(menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) 
+        {
+            if ("menu".equals(state) || "pause".equals(state)){
+                System.exit(0);
+            }
+        }    
         
         // Player shot and consumed a point
         if(0 < points) {
