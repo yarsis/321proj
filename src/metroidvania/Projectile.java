@@ -21,7 +21,7 @@ public class Projectile {
     private double xspeed, yspeed; // Double values for movement speed.
     private final Rectangle hitBox; // Rectangle for the projectile's hitbox.
     private final PlayPanel game; // PlayPanel of the game using the projectile.
-    private Color color; // Color of the projectile.
+    private final Color color; // Color of the projectile.
     
      /**
       * Construct a Projectile object in the game with an xy position, movement
@@ -36,7 +36,7 @@ public class Projectile {
       * @param newColor Color of the projectile.
       */
     public Projectile(int x, int y, int xspeed, int yspeed, PlayPanel game, Color newColor) {
-	// Set attributes according to parameters and defaults.
+		// Set attributes according to parameters and defaults.
         this.game = game;
         this.x = x;
         this.y = y;
@@ -58,13 +58,13 @@ public class Projectile {
      * postcondition	        Projectile has moved.	
      */
     public void activate() {
-	// Update the projectile's position and hitbox.
+		// Update the projectile's position and hitbox.
         x += xspeed;
         y += yspeed;
         hitBox.x = x;
         hitBox.y = y;
         
-	// Horizontal collision detection, uses the same method as the player object.
+		// Horizontal collision detection, uses the same method as the player object.
         hitBox.x += xspeed;
         for(int i = 0; i < game.gameTerrain.size(); i++) {
             Terrain ter = game.gameTerrain.get(i);
@@ -79,7 +79,7 @@ public class Projectile {
             }
         }
         
-	//Vertical collision detection, same as player's collision detection.
+		//Vertical collision detection, same as player's collision detection.
         hitBox.y += yspeed;
         for(int i = 0; i < game.gameTerrain.size(); i++) {
 			Terrain ter = game.gameTerrain.get(i);
@@ -103,7 +103,7 @@ public class Projectile {
      * @param gtd        Display area for the game.
      */
     public void drawProj(Graphics2D gtd) {
-	// Make a projectile rectangle in the specified color.
+		// Make a projectile rectangle in the specified color.
         gtd.setColor(color);
         gtd.fillRect(x, y, width, height);
     }
