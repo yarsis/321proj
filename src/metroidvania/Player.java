@@ -9,7 +9,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 /**
- *
+ * This class represents the game's player character as a colored rectangle.
+ * It supports the status of the player's health and score, as well as various
+ * forms of movement. Enemy behavior is also modified to shoot at the player
+ * when appropriate.
+ * 
  * @author caden, Henry Schulz
  */
 public class Player {
