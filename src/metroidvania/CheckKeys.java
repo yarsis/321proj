@@ -9,52 +9,54 @@ import java.awt.event.KeyEvent;
 
 /**
  * This class checks key presses and releases detected in a game PlayPanel.
- * Subclass of the KeyAdapter object, overrides its methods to respond specifically
- * to the game. Functions as part of the Controller of the GUI.
- * 
+ * Subclass of the KeyAdapter object, overrides its methods to respond
+ * specifically to the game. Functions as part of the Controller of the GUI.
+ *
  * @author caden
  */
-public class CheckKeys extends KeyAdapter{
-    
+public class CheckKeys extends KeyAdapter {
+
     PlayPanel game; // Declare a PlayPanel as the game being responded to for
-                    // key presses.
-    
+    // key presses.
+
     /**
      * Constructs a CheckKeys object that is assigned a game given in the
      * parameter to check for key presses.
-     * 
+     *
      * @param game PlayPanel that represents the game that the user is playing.
      */
-    public CheckKeys(PlayPanel game){
+    public CheckKeys(PlayPanel game) {
         this.game = game; // Assign the given game to the CheckKeys object.
     }
-   
+
     /**
-     * Override of the default keyPressed method.
-     * Calls the game's key press response given the KeyEvent passed.
-     * 
-     * precondition     CheckKeys object is listening to a PlayPanel.
-     * postcondition    Game's response to a key press is executed.
+     * Override of the default keyPressed method. Calls the game's key press
+     * response given the KeyEvent passed.
+     *
+     * precondition CheckKeys object is listening to a PlayPanel. postcondition
+     * Game's response to a key press is executed.
+     *
      * @param e KeyEvent indicating a key has been pressed, passed as the
-     *          parameter for the game's keyPress method to call a response.
+     * parameter for the game's keyPress method to call a response.
      */
     @Override
-    public void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e) {
         game.keyPress(e);
     }
-    
+
     /**
-     * Override of the default keyReleased method.
-     * Calls the game's key release response given the KeyEvent passed.
-     * 
-     * precondition     CheckKeys object is listening to a PlayPanel.
-     * postcondition    Game's response to a key release is executed.
+     * Override of the default keyReleased method. Calls the game's key release
+     * response given the KeyEvent passed.
+     *
+     * precondition CheckKeys object is listening to a PlayPanel. postcondition
+     * Game's response to a key release is executed.
+     *
      * @param e KeyEvent indicating a key has been released, passed as the
-     *          parameter for the game's keyRelease method to call a response.
+     * parameter for the game's keyRelease method to call a response.
      */
     @Override
-    public void keyReleased(KeyEvent e){
+    public void keyReleased(KeyEvent e) {
         game.keyRelease(e);
     }
-    
+
 }

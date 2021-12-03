@@ -10,42 +10,43 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
  * This program is a Metroidvania game, which is a 2D sidescrolling platformer
- * with different randomly generated levels, attacking enemies, and a running score.
- * The player accumulates points, which are spent as ammo to shoot enemies while
- * navigating the levels. Enemies target the player, and are destroyed after being
- * hit by the player. The player loses when their health reaches 0 or they fall
- * out of the level. The game will be able to keep the score and can save the player's name
- * and high score after the game is lost(could not be implemented). The GUI is
- * handled with a complex MVC model, where Controller objects communicate actions
- * between the user and the program.
- * 
+ * with different randomly generated levels, attacking enemies, and a running
+ * score. The player accumulates points, which are spent as ammo to shoot
+ * enemies while navigating the levels. Enemies target the player, and are
+ * destroyed after being hit by the player. The player loses when their health
+ * reaches 0 or they fall out of the level. The game will be able to keep the
+ * score and can save the player's name and high score after the game is
+ * lost(could not be implemented). The GUI is handled with a complex MVC model,
+ * where Controller objects communicate actions between the user and the
+ * program.
+ *
  * @author caden
  */
 public class Metroidvania {
 
     /**
-     * Main exercise class of the program, creates the main window for the program
-     * and starts the game from the main menu.
-     * 
+     * Main exercise class of the program, creates the main window for the
+     * program and starts the game from the main menu.
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         MainFrame frame = new MainFrame(); // Create the main program window.
-        
+
         // Set size to 700x700 display, get user display size, set frame location 
         // to center of screen.
         frame.setSize(700, 700);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
-        
+        frame.setLocation((int) (screenSize.getWidth() / 2 - frame.getSize().getWidth() / 2), (int) (screenSize.getHeight() / 2 - frame.getSize().getHeight() / 2));
+
         // Display the window with the game title.
         frame.setResizable(false);
         frame.setTitle("Metroidvania");
         frame.setVisible(true);
-        
+
         //Terminate program when window is closed.
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
     }
-    
+
 }
