@@ -37,36 +37,43 @@ public class LevelMaker {
      *                       been generated.
      */
     public void makeTerrain(boolean firstLevel) {
-        int select;
+        int select; // Declare the integer used to select a specific terrain to generate.
         
+        // Clear the old terrain, projectiles, and enemies.
         game.gameTerrain.clear();
         game.enemyList.clear();
         game.projList.clear();
         
+        // Select a random value from 0 to 4 to pick a random level to generate.
+        // Excludes the current level and returns whether or not to generate the
+        // first level instead of a random one.
         select = randomInteger(0, 4, currentTerrain, firstLevel);
         
+        // Switch case that selects which level to generate based on the value
+        // of select.
         switch (select) {
             case 101:
                 terrainStart();
-				break;
+		break;
             case 0:
                 terrain0();
-				break;
+		break;
             case 1:
                 terrain1();
-				break;
+		break;
             case 2:
                 terrain2();
-				break;
+		break;
             case 3:
                 terrain3();
-				break;
+		break;
             case 4:
                 terrain4();
-				break;
+		break;
         }
         
-        currentTerrain = select;
+        currentTerrain = select; // Set the current generated level to what was
+                                 // assigned to select.
     }
     
     /**
@@ -84,14 +91,23 @@ public class LevelMaker {
      * @return           A random integer.
      */
     public int randomInteger(int min, int max, int avoid, boolean firstLevel) {
-        double value;
-		
-        if (firstLevel) return 101;
+        double value; // Double value that will be used to store the randomly
+                      // generated value.
         
+        // Return the integer 101 to call for the first level to be generated
+        // if firstLevel is true.
+        if (firstLevel) {
+            return 101;
+        }
+        
+        // Generate a random allowed integer 1 - 100 and assign it to value
+        // then return that value.
         while(true) {
             value = Math.random()*100;
-			
-            if(min <= value && value < max + 1) {	// +1 because of truncation
+            
+            // Check if value is within limits, generate another if not.
+            if(min <= value && value < max + 1) {   // +1 because of truncation
+                // Check if value is not the excluded value, generate another if it is.
                 if ((int)value != avoid) {
                     return (int)value;
                 }
