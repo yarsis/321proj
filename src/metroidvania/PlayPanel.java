@@ -350,8 +350,8 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
     
     /**
      * Function returns the player color.
-     * @precondition     Game has been initialized.
-     * @return		 Current player color.
+     * @precondition	Game has been initialized.
+     * @return			Current player color.
      */
     public Color getPlayerColor() {
         return playerColor;
@@ -360,8 +360,8 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
     /**
      * Function returns the background color.
      * 
-     * @precondition     Game has been initialized.
-     * @return		 Current background color.
+     * @precondition	Game has been initialized.
+     * @return			Current background color.
      */
     public Color getBackgroundColor() {
         return this.getBackground();
@@ -370,8 +370,8 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
     /**
      * Function returns the enemy's color.
      * 
-     * @precondition     Game has been initialized.
-     * @return		 Current enemy's color.
+     * @precondition	Game has been initialized.
+     * @return			Current enemy's color.
      */
     public Color getEnemyColor() {
         return enemyColor;
