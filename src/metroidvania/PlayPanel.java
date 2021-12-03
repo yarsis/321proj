@@ -279,7 +279,7 @@ public final class PlayPanel extends javax.swing.JPanel implements ActionListene
         }
         if(menu.getExitRect().contains(new Point(e.getPoint().x, e.getPoint().y - 27))) 
         {
-            if ("menu".equals(state) || "pause".equals(state)){
+            if ("menu".equals(state) || "pause".equals(state) || "dead".equals(state)){
                 System.exit(0); // Exit program.
             }
         }    
